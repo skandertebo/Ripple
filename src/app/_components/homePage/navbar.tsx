@@ -1,8 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DropDownMenu } from "./dropDownMenu";
+import { getServerAuthSession } from "@/server/auth";
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await getServerAuthSession();
+  const userName = session ? session.user?.name : "Sign in";
+
   return (
     <nav className="sticky top-0 w-full px-1 sm:px-10">
       <div className="flex w-full items-center justify-between py-4">
@@ -16,20 +20,25 @@ export function Navbar() {
           </Link>
         </div>
         <div className="hidden flex-row gap-4 sm:flex md:gap-20">
-          <Link href="/" className="text-xl font-semibold">
+          <Link href="/" className="text-xl font-semibold hover:text-primary">
             SearchIN
           </Link>
-          <Link href="/" className="text-xl font-semibold">
+          <Link href="/" className="text-xl font-semibold hover:text-primary">
             Influencers
           </Link>
-          <Link href="/" className="text-xl font-semibold">
+          <Link href="/" className="text-xl font-semibold hover:text-primary">
             Chat
           </Link>
         </div>
-        <Link href="/" className=" hidden text-xl sm:block">
-          login
+        <Link
+          href={session ? "/api/auth/signout" : "/api/auth/signin"}
+          className="hidden text-xl hover:text-primary sm:block"
+        >
+          {userName}
         </Link>
-        <DropDownMenu />
+        {userName && (
+          <DropDownMenu userName={userName} session={session ? true : false} />
+        )}
       </div>
     </nav>
   );

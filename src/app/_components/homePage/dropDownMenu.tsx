@@ -3,7 +3,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 
-export function DropDownMenu() {
+interface DropDownMenuProps {
+  userName: string;
+  session: boolean;
+}
+export function DropDownMenu({ userName, session }: DropDownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   const showMenu = isOpen ? "block" : "hidden";
@@ -29,8 +33,11 @@ export function DropDownMenu() {
           <Link href="/" className="text-xl font-semibold hover:text-primary">
             Chat
           </Link>
-          <Link href="/" className="text-xl font-semibold hover:text-primary">
-            Login
+          <Link
+            href={session ? "/api/auth/signout" : "/api/auth/signin"}
+            className="text-xl font-semibold hover:text-primary"
+          >
+            {userName}
           </Link>
         </div>
       </div>
