@@ -3,8 +3,7 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import InfluencerCard from "./_components/influencer/influencer-card";
-import SuggestedCard from "./_components/influencer/suggested-card";
+import NavBar from "./_components/NavBar/page";
 
 export const metadata = {
   title: "Create T3 App",
@@ -12,35 +11,6 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const influencer = {
-    "_id" : "661e45ed85a6eea351ffdf81",
-    "name" : "Juventus",
-    "username" : "juventus",
-    "bio" : "An Italian Icon since 1897 ⚪️⚫️ Hit follow and be part of the journey! More 🏃‍♀️content ➡️ @juventuswomen",
-    "avatar" : "https://cdn1.picuki.com/hosted-by-instagram/q/yep6IPkO1EBGZyPbcMUVwOZVj6JwQAQ=.jpeg",
-    "stats" : {
-        "postsCount" : "16,503",
-        "followerCount" : "60,426,963",
-        "followingCount" : "75"
-    },
-    "platform" : "Instagram",
-    "contact" : {
-        "email" : [
-
-        ],
-        "phone" : [
-
-        ],
-        "url" : [
-
-        ]
-    },
-    "categories" : [
-        "Sports",
-        "Soccer",
-        "Football"
-    ],
-}
 
 export default function RootLayout({
   children,
@@ -50,9 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        {/* <TRPCReactProvider>{children}</TRPCReactProvider> */}
-        <SuggestedCard influencer={influencer} />
+        <NavBar/>
+        <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
     </html>
+
   );
 }
