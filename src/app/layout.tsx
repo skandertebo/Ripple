@@ -7,8 +7,8 @@ import InfluencerPage from "./influencers/[id]/page";
 
 export const metadata = {
   title: "Ripple",
-  description: "Ripple is a modern web platforme ffor influencers marketing.",
-  icons: [{ rel: "icon", url: "/logo.png" }],
+  description: "Ripple is a modern web platform for influencers marketing.",
+  icons: [{ rel: "icon", url: "/logo1.png" }],
 };
 
 
@@ -22,7 +22,6 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
-        {/* <InfluencerPage influencer={influencers[0]} suggestedInfluencers={influencers.slice(1)}/> */}
       </body>
     </html>
   );

@@ -13,7 +13,7 @@ const InfluencerPage: FC<InfluencerPageProps> = ({
   suggestedInfluencers,
 }) => {
   return (
-    <div className="bg-slate-100 pt-6">
+    <div className="bg-slate-100 pt-6 z-20">
       <InfluencerCard influencer={influencer}/>
       <div className="container m-auto mt-8 rounded-2xl p-5"> 
         <h1 className="font-bold text-xl ml-2">Similar Influencers</h1>

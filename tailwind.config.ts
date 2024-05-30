@@ -4,16 +4,13 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
-    colors: {
-      primary: "#1E96A4",
-      secondary: "rgba(118,118,118,0.6)",
-      third: "#AEAEAE",
-      black: "#000000",
-      white: "#FFFFFF",
-    },
     extend: {
       colors: {
         primary: "#1E96A4",
+        secondary: "rgba(118,118,118,0.6)",
+        third: "#AEAEAE",
+        black: "#000000",
+        white: "#FFFFFF",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],

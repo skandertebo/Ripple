@@ -17,15 +17,15 @@ const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
   return (
     <div className="container m-auto w-fit rounded-2xl border-2 p-6 bg-white">
       <div className="influencer-info flex flex-row text-center ">
-        <div className="relative influencer-pic mr-6 -z-10">
+        <div className="influencer-pic mr-6 ">
           <Image
             src={influencer.avatar}
             alt="Influencer"
-            className="influencer-pic size-24 rounded-full  "
+            className="influencer-pic size-24 rounded-full"
             width={60}
             height={60}
           />
-          <FaCheckCircle className="check-icon absolute	 ml-[70px] mt-[-24px] size-7	rounded-full  border-2 bg-white text-sky-500" />
+          <FaCheckCircle className="check-icon z-10 absolute ml-[70px] mt-[-24px] size-7 rounded-full border-2 bg-white text-sky-500" />
         </div>
 
         <div className="header mt-2">
@@ -64,7 +64,7 @@ const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
         </div>
       </div>
 
-      {/* <div className="categories mt-10 flex gap-4">
+      <div className="categories mt-10 flex gap-4">
         {influencer.categories.map((category, index) => (
           <div
             key={index}
@@ -74,7 +74,7 @@ const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
             <p className="font-extralight text-neutral-400">20%</p>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { GoBell } from "react-icons/go";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full">
+    <div className="navbar flex w-full">
       <div className="bg-white sticky top-0 h-dvh w-20 border-2 ">
         <ul>
           <li>
@@ -37,7 +37,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </li>
         </ul>
       </div>
-      <div className="flex-1">
+      <div className="navbar flex-1">
         <div className="sticky bg-white top-0 ml-[-2px] h-16 w-full border-2 pt-4 text-xl">
           <div className="relative flex flex-row align-middle">
             <Link href="/" className="ml-12 flex size-fit gap-1 self-center ">

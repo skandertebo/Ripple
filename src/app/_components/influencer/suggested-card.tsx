@@ -13,7 +13,7 @@ import {
 
 const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
   return (
-    <Link href={`/influencer/${influencer._id}`}>
+    <Link href={`/influencers/${influencer._id}`}>
       <div className="container m-auto mt-10 bg-white w-72 rounded-2xl h-72 border-2 p-5 text-center">
         <div className="float-left text-4xl">
           {influencer.platform === "tikTok" && (
@@ -42,7 +42,7 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
 
           <div className="bio mt-3 text-xs text-neutral-600 ">{influencer.bio}</div>
 
-          <div className="stats m-auto mt-3 flex w-9/12 gap-2 r text-sm font-semibold">
+          <div className="stats m-auto mt-3 flex w-fit gap-2 r text-sm font-semibold">
             <div>
               <h3>{influencer.stats.followerCount}</h3>
               <p className="text-xs font-extralight	text-neutral-400">Followers</p>
