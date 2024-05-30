@@ -3,8 +3,6 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import InfluencerCard from "./_components/influencer/influencer-card";
-import SuggestedCard from "./_components/influencer/suggested-card";
 import InfluencerPage from "./influencer/page";
 
 export const metadata = {

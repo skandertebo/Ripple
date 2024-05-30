@@ -6,12 +6,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        blue: '#1E96A4'
+        primary: "#1E96A4",
       },
       fontFamily: {
-          sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-        },
+        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+      },
     },
-    },
+  },
   plugins: [],
 } satisfies Config;
