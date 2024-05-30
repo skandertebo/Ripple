@@ -5,10 +5,13 @@ export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+      colors: {
+        blue: '#1E96A4'
       },
+      fontFamily: {
+          sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        },
     },
-  },
+    },
   plugins: [],
 } satisfies Config;
