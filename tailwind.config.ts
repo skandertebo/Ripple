@@ -12,6 +12,9 @@ export default {
       white: "#FFFFFF",
     },
     extend: {
+      colors: {
+        primary: "#1E96A4",
+      },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
       },
