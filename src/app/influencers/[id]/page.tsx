@@ -23,7 +23,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },
 {
   "_id" : "661e45ef85a6eea351ffdf82",
@@ -47,7 +52,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },
 {
   "_id" : "661e45ef85a6eea351ffdf83",
@@ -71,7 +81,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },
 {
   "_id" : "661e45ef85a6eea351ffdf84",
@@ -95,7 +110,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },
 {
   "_id" : "661e45ef85a6eea351ffdf85",
@@ -119,7 +139,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },{
   "_id": "661e45ef85a6eea351ffdf86",
   "name" : "Nurlan Batyrov 🇰🇿",
@@ -143,7 +168,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },
 {
   "_id": "661e45ef85a6eea351ffdf87",
@@ -167,7 +197,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },{
   "_id" :"661e45ef85a6eea351ffdf88",
   "name" : "Clara Galle🌀",
@@ -190,7 +225,12 @@ const influencers=[
       "url" : [
 
       ]
-  }
+  },
+  "categories" : [
+      "Sports",
+      "Football",
+      "Music"
+  ]
 },
 {
   "_id" :"661e45ef85a6eea351ffdf89",
