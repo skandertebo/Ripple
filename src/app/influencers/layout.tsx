@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </ul>
       </div>
       <div className="flex-1">
-        <div className="sticky top-0 ml-[-2px] h-16 w-full border-2 pt-4 text-xl">
+        <div className="sticky bg-white top-0 ml-[-2px] h-16 w-full border-2 pt-4 text-xl">
           <div className="relative flex flex-row align-middle">
             <Link href="/" className="ml-12 flex size-fit gap-1 self-center ">
               <IoIosArrowBack className="mt-1 "></IoIosArrowBack>

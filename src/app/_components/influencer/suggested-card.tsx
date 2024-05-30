@@ -3,23 +3,20 @@
 import Image from "next/image";
 import type { InfluencerCardProps } from "./influencer-card";
 import type { FC } from "react";
+import Link from "next/link";
 import {
   FaCheckCircle,
   FaInstagram,
   FaTiktok,
   FaYoutube,
 } from "react-icons/fa";
-import Link from "next/link";
 
 const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
   return (
-    // <Link to={{
-    //     pathname: `/influencer/${influencer.name}`,
-    //     state: { influencer }
-    //   }}>
+    <Link href={`/influencer/${influencer._id}`}>
       <div className="container m-auto mt-10 bg-white w-72 rounded-2xl h-72 border-2 p-5 text-center">
         <div className="float-left text-4xl">
-          {influencer.platform === "TikTok" && (
+          {influencer.platform === "tikTok" && (
             <FaTiktok className="tiktok-icon" />
           )}
           {influencer.platform === "YouTube" && (
@@ -40,7 +37,7 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
           <FaCheckCircle className="check-icon absolute ml-[140px] mt-[-24px] size-7 rounded-full  border-2 bg-white text-sky-500" />
 
           <div className="profile-info mt-3">
-            <h2 className="text-blue ">@{influencer.name}</h2>
+            <h2 className="text-primary ">@{influencer.name}</h2>
           </div>
 
           <div className="bio mt-3 text-xs text-neutral-600 ">{influencer.bio}</div>
@@ -74,7 +71,7 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
         </style>
       </div>
       
-    // </Link>
+    </Link>
   );
 };
 

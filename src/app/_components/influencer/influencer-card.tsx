@@ -15,9 +15,9 @@ export interface InfluencerCardProps {
 
 const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
   return (
-    <div className="container m-auto mt-10 w-fit rounded-2xl border-2 p-6 bg-white">
+    <div className="container m-auto w-fit rounded-2xl border-2 p-6 bg-white">
       <div className="influencer-info flex flex-row text-center ">
-        <div className="influencer-pic mr-6">
+        <div className="relative influencer-pic mr-6 -z-10">
           <Image
             src={influencer.avatar}
             alt="Influencer"
@@ -42,7 +42,7 @@ const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
           </div>
           <div className="profile flex flex-row">
             <div className="profile-info">
-              <h2 className="text-blue ">@{influencer.name}</h2>
+              <h2 className="text-primary ">@{influencer.name}</h2>
               <p className="text-neutral-600">{influencer.username}</p>
             </div>
           </div>
