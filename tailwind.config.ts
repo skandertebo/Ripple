@@ -10,6 +10,7 @@ export default {
         primary: "#1E96A4",
         secondary: "rgba(118,118,118,0.6)",
         third: "#AEAEAE",
+        background: "#ECECEC",
         black: "#000000",
         white: "#FFFFFF",
       },

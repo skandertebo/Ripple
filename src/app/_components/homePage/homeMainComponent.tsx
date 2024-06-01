@@ -10,28 +10,20 @@ export function HomeMainComponent() {
       <div className="mt-16 flex w-full flex-row justify-start gap-4 text-xl md:gap-24 md:text-4xl">
         <Link
           href={"/"}
-          className="text-white bg-black flex cursor-pointer flex-row rounded-3xl px-5 py-2 font-semibold"
+          className="flex cursor-pointer flex-row rounded-3xl bg-black px-5 py-2 font-semibold text-white"
         >
-          <Image
-            src="/cercleBlack.png"
-            alt="homePageImage"
-            width={25}
-            height={25}
-            className="mr-3 rounded-full"
-          />
+          <div className=" mr-3 mt-[1px] h-9 w-9 rounded-full bg-white text-center">
+            <div className="mx-auto ml-[6px] mt-[6px] h-[24px] w-[24px] rounded-full bg-black"></div>
+          </div>
           <p className="w-fit">Get Started</p>
         </Link>
         <Link
           href={"/"}
-          className="text-white bg-secondary flex cursor-pointer flex-row rounded-3xl px-5 py-2 font-semibold"
+          className="flex cursor-pointer flex-row rounded-3xl bg-secondary px-5 py-2 font-semibold text-white"
         >
-          <Image
-            src="/cercleGray.png"
-            alt="homePageImage"
-            width={25}
-            height={25}
-            className="mr-3 rounded-full"
-          />
+          <div className=" mr-3 mt-[1px] h-9 w-9 rounded-full bg-white text-center">
+            <div className="mx-auto ml-[6px] mt-[6px] h-[24px] w-[24px] rounded-full bg-third"></div>
+          </div>
           <p className="w-fit">Learn More</p>
         </Link>
       </div>

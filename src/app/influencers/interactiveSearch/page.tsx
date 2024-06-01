@@ -1,11 +1,12 @@
+import InteractiveSearch from "@/app/_components/interactiveSearch/interactiveSearch";
+import SearchHistory from "@/app/_components/interactiveSearch/searchHistory";
+
 export default function Page() {
   return (
-    <div>
-      <div className="flex h-screen flex-col items-center justify-center">
-        <div className="text-3xl font-bold">Interactive Search</div>
-        <div className="mt-2 text-center text-lg">
-          This is a page for interactive search
-        </div>
+    <div className="flex flex-row bg-background">
+      <SearchHistory />
+      <div className="relative -mt-16 h-screen flex-1 overflow-y-scroll pt-16">
+        <InteractiveSearch />
       </div>
     </div>
   );
