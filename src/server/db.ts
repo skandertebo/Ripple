@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-
 import { env } from "@/env";
+import { PrismaClient } from "@prisma/client";
+import mongoose from "mongoose";
 
 const createPrismaClient = () =>
   new PrismaClient({
@@ -12,6 +12,21 @@ const createPrismaClient = () =>
       },
     },
   });
+
+let mongooseConnection: mongoose.Connection;
+
+export const connectDB = async () => {
+  if (mongooseConnection) return mongooseConnection;
+  console.log("Connecting to MongoDB");
+  try {
+    const conn = await mongoose.connect(env.MONGODB_URI, {});
+    mongooseConnection = conn.connection;
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${(error as Error).message}`);
+    process.exit(1);
+  }
+};
 
 const globalForPrisma = globalThis as unknown as {
   prisma: ReturnType<typeof createPrismaClient> | undefined;
