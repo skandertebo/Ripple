@@ -1,5 +1,5 @@
-import { InfluencerDto } from "@/service/dto/influencerDto";
-import { FC } from "react";
+import type { InfluencerDto } from "@/service/dto/influencerDto";
+import type { FC } from "react";
 import InfluencerCard from "../../_components/influencer/influencer-card";
 import SuggestedCard from "../../_components/influencer/suggested-card";
 
@@ -13,10 +13,10 @@ const InfluencerPage: FC<InfluencerPageProps> = ({
   suggestedInfluencers,
 }) => {
   return (
-    <div className="bg-slate-100 pt-6 z-20">
+    <div className="bg-slate-100 pt-6">
       <InfluencerCard influencer={influencer}/>
-      <div className="container m-auto mt-8 rounded-2xl p-5"> 
-        <h1 className="font-bold text-xl ml-2">Similar Influencers</h1>
+      <div className="container m-auto mt-6 p-5"> 
+        <h1 className="font-bold text-2xl ml-6 ">Similar Influencers</h1>
         <div className="flex flex-wrap gap-5">
 
         {suggestedInfluencers.map((influencer, index) => (

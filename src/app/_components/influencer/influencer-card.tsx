@@ -1,13 +1,15 @@
 "use client";
 import {
   FaCheckCircle,
-  FaInstagram,
-  FaTiktok,
-  FaYoutube,
 } from "react-icons/fa";
 import Image from "next/image";
-import { InfluencerDto } from "@/service/dto/influencerDto";
-import { FC } from "react";
+import type { InfluencerDto } from "@/service/dto/influencerDto";
+import type { FC } from "react";
+import { MdOutlineMail } from "react-icons/md";
+import { FiPhone } from "react-icons/fi";
+import { FaLink } from "react-icons/fa6";
+
+
 
 export interface InfluencerCardProps {
   influencer: InfluencerDto;
@@ -16,28 +18,28 @@ export interface InfluencerCardProps {
 const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
   return (
     <div className="container m-auto w-fit rounded-2xl border-2 p-6 bg-white">
-      <div className="influencer-info flex flex-row text-center ">
-        <div className="influencer-pic mr-6 ">
+      <div className="influencer-info flex flex-wrap text-center ">
+        <div className="relative influencer-pic mr-6 ">
           <Image
-            src={influencer.avatar}
+            src={influencer.avatar.replace('-sign-va', '')}
             alt="Influencer"
-            className="influencer-pic size-24 rounded-full"
+            className=" size-24 rounded-full"
             width={60}
             height={60}
           />
-          <FaCheckCircle className="check-icon z-10 absolute ml-[70px] mt-[-24px] size-7 rounded-full border-2 bg-white text-sky-500" />
+          <FaCheckCircle className="check-icon absolute top-[75px] right-1 size-7 rounded-full border-2 bg-white text-sky-500" />
         </div>
 
         <div className="header mt-2">
           <div className="float-right text-4xl">
-            {influencer.platform === "TikTok" && (
-              <FaTiktok className="tiktok-icon" />
+            {influencer.platform === "tiktok" && (
+              <Image src='/tiktok1.png' width={50} height={50} alt='insta' />
             )}
-            {influencer.platform === "YouTube" && (
-              <FaYoutube className="youtube-icon" />
+            {influencer.platform === "youtube" && (
+              <Image src='/youtube.png' width={50} height={50} alt='insta' />
             )}
             {influencer.platform === "Instagram" && (
-              <FaInstagram className="instagram-icon" />
+              <Image src='/insta.png' width={50} height={50} alt='insta' />
             )}
           </div>
           <div className="profile flex flex-row">
@@ -74,6 +76,38 @@ const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
             <p className="font-extralight text-neutral-400">20%</p>
           </div>
         ))}
+      </div>
+      <div className="flex gap-10 mt-4 contact">
+        {influencer.contact.email.length>0 && (
+          <div className="flex email mt-4 gap-2">
+            <MdOutlineMail className="email-icon mt-1 text-primary text-xl" />
+            <div>
+              {influencer.contact.email.map((email, index) => (
+                <span className="font-extralight block text-neutral-400" key={index}>{email}</span>
+              ))}
+            </div>
+          </div>
+        )}
+        {influencer.contact.phone.length>0  && (
+           <div className="flex email mt-4 gap-2">
+            <FiPhone className="email-icon mt-1 text-primary text-xl" />
+            <div>
+              {influencer.contact.phone.map((phone, index) => (
+                <span className="font-extralight block text-neutral-400" key={index}>{phone}</span>
+              ))}
+            </div>
+          </div>
+        )}
+        {influencer.contact.url.length>0  && (
+          <div className="flex email mt-4 gap-2">
+            <FaLink className="email-icon mt-1 text-primary text-xl"/>
+            <div>
+              {influencer.contact.url.map((url, index) => (
+                <span className="font-extralight block text-neutral-400" key={index}>{url}</span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

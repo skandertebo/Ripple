@@ -6,9 +6,6 @@ import type { FC } from "react";
 import Link from "next/link";
 import {
   FaCheckCircle,
-  FaInstagram,
-  FaTiktok,
-  FaYoutube,
 } from "react-icons/fa";
 
 const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
@@ -16,14 +13,14 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
     <Link href={`/influencers/${influencer._id}`}>
       <div className="container m-auto mt-10 bg-white w-72 rounded-2xl h-72 border-2 p-5 text-center">
         <div className="float-left text-4xl">
-          {influencer.platform === "tikTok" && (
-            <FaTiktok className="tiktok-icon" />
+          {influencer.platform === "tiktok" && (
+            <Image src="/tiktok1.png" width={30} height={30} alt="tiktok" />
           )}
-          {influencer.platform === "YouTube" && (
-            <FaYoutube className="youtube-icon" />
+          {influencer.platform === "youtube" && (
+            <Image src="/youtube.png" width={30} height={30} alt="youtube" />
           )}
           {influencer.platform === "Instagram" && (
-            <FaInstagram className="instagram-icon" />
+            <Image src="/insta.png" width={30} height={30} alt="insta" />
           )}
         </div>
         <div className="influencer-pic">

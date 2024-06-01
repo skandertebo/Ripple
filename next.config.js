@@ -14,7 +14,7 @@ const config = {
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   },
   images: {
-    domains: ["cdn1.picuki.com"],
+    domains: ["cdn1.picuki.com","p16.tiktokcdn.com"],
   },
 };
 
