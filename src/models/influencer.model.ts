@@ -8,9 +8,9 @@ export interface IInfluencer extends Document {
   bio: string;
   avatar: string;
   stats: {
-    postsCount: string;
-    followerCount: string;
-    followingCount: string;
+    postsCount: number;
+    followerCount: number;
+    followingCount: number;
   };
   platform: string;
   contact: {
@@ -29,9 +29,9 @@ export const influencerSchema = new Schema<IInfluencer>(
     bio: { type: String },
     avatar: { type: String },
     stats: {
-      postsCount: { type: String },
-      followerCount: { type: String },
-      followingCount: { type: String },
+      postsCount: { type: Number },
+      followerCount: { type: Number },
+      followingCount: { type: Number },
     },
     platform: { type: String },
     contact: {

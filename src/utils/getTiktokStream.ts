@@ -1,3 +1,3 @@
 export default function getTiktokMediaUrl(originalUrl: string) {
-  return `/api/tiktok-image?url=${encodeURIComponent(originalUrl)}`;
+  return originalUrl.split("?")[0]?.replace("-sign-va", "");
 }

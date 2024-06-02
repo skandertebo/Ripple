@@ -1,22 +1,22 @@
+import { getServerAuthSession } from "@/server/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { DropDownMenu } from "./dropDownMenu";
-import { getServerAuthSession } from "@/server/auth";
 
 export async function Navbar() {
   const session = await getServerAuthSession();
   const userName = session ? session.user?.name : "Sign in";
 
   return (
-    <nav className="sticky top-0 w-full px-1 sm:px-10">
+    <nav className="sticky top-0 z-50 w-full bg-white px-1 sm:px-10">
       <div className="flex w-full items-center justify-between py-4">
-        <div className="flex flex-row justify-start">
-          <Image src="/logo.png" alt="logo" width={100} height={100} />
+        <div className="flex flex-row justify-start gap-4">
+          <Image src="/logo1.png" alt="logo" width={90} height={90} />
           <Link
             href="/"
             className="flex flex-col items-center justify-center text-4xl font-semibold"
           >
-            <span className="h-fit w-fit text-primary">Ripple</span>
+            <span className="h-fit w-fit text-5xl text-primary">Ripple</span>
           </Link>
         </div>
         <div className="hidden flex-row gap-4 sm:flex md:gap-20">
