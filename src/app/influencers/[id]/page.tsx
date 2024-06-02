@@ -11,15 +11,13 @@ export default async function Page({ params }: { params: { id: string } }) {
   const similar = await api.influencer.getSimilarInfluencers(params.id);
   const ids = similar.map((influencer: SimilarInfluencer) => influencer.id);
   const suggestedInfluencers = await api.influencer.getByIds(ids);
-
+  if (!influencer) {
+    throw new Error("Influencer not found");
+  }
   return (
-    <>
-      {influencer && (
-        <InfluencerPage
-          influencer={influencer}
-          suggestedInfluencers={suggestedInfluencers.slice(0, -1)}
-        />
-      )}
-    </>
+    <InfluencerPage
+      influencer={influencer}
+      suggestedInfluencers={suggestedInfluencers.slice(0, -1)}
+    />
   );
 }
