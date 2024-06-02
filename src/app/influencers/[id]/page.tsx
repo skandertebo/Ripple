@@ -1,4 +1,3 @@
-import InfluencerCard from "@/app/_components/influencer/influencer-card";
 import InfluencerPage from "@/app/_components/influencer/influencer-page";
 import { getSimilarInfluencers } from "@/trpc/getSimilarInfluencers";
 import { api } from "@/trpc/server";
@@ -25,10 +24,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   
   return (
     <>
-      <InfluencerPage
-        influencer={influencer}
-        suggestedInfluencers={suggestedInfluencers.slice(0, -1)}
-      />
+      {influencer && (
+        <InfluencerPage
+          influencer={influencer}
+          suggestedInfluencers={suggestedInfluencers.slice(0, -1)}
+        />
+      )}
     </>
   );
 }
