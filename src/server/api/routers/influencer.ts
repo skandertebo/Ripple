@@ -2,6 +2,7 @@ import type { SimilarInfluencer } from "@/app/influencers/[id]/page";
 import { env } from "@/env";
 import { InfluencerModel } from "@/models/influencer.model";
 import axios from "axios";
+import { isValidObjectId } from "mongoose";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
@@ -72,6 +73,10 @@ export const influencerRouter = createTRPCRouter({
     }),
 
   getOne: protectedProcedure.input(z.string()).query(async ({ input }) => {
+    const isValid = isValidObjectId(input);
+    if (!isValid) {
+      return null;
+    }
     const influencer = await InfluencerModel.findById(input);
     return influencer;
   }),
