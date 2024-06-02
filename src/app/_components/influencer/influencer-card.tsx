@@ -16,7 +16,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
   useLayoutEffect(() => {
     if (avatarRef.current === null) return;
     avatarRef.current.onerror = () => {
-      avatarRef.current!.src = "/logo.png";
+      if (avatarRef.current) avatarRef.current.src = "/logo.png";
     };
   }, [avatarRef.current]);
 
