@@ -1,16 +1,16 @@
-import type { Document, Model } from "mongoose";
+import type { Model } from "mongoose";
 import mongoose, { Schema, model } from "mongoose";
 
-export interface IInfluencer extends Document {
+export interface IInfluencer {
   _id: string;
   name: string;
   username: string;
   bio: string;
   avatar: string;
   stats: {
-    postsCount: string;
-    followerCount: string;
-    followingCount: string;
+    postsCount: number;
+    followerCount: number;
+    followingCount: number;
   };
   platform: string;
   contact: {
@@ -18,7 +18,7 @@ export interface IInfluencer extends Document {
     phone: string[];
     url: string[];
   };
-  categories: string[];
+  categories?: string[];
 }
 
 export const influencerSchema = new Schema<IInfluencer>(
@@ -29,9 +29,9 @@ export const influencerSchema = new Schema<IInfluencer>(
     bio: { type: String },
     avatar: { type: String },
     stats: {
-      postsCount: { type: String },
-      followerCount: { type: String },
-      followingCount: { type: String },
+      postsCount: { type: Number },
+      followerCount: { type: Number },
+      followingCount: { type: Number },
     },
     platform: { type: String },
     contact: {
