@@ -60,7 +60,6 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
           <div className="stats m-4 flex w-9/12 justify-between font-bold">
             <div className="flex gap-1">
               <h3>
-                {" "}
                 {formatFollowersNumber(
                   influencer.stats?.followerCount ?? "unknown",
                 )}
