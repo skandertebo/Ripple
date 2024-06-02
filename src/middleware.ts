@@ -14,6 +14,7 @@ interface NextRequestWithUser extends NextRequest {
 export async function middleware(request: NextRequestWithUser) {
   const { pathname } = request.nextUrl;
   let host = new URL(request.nextUrl.href).host;
+  console.log(host);
   if (!host.startsWith("http://") && !host.startsWith("https://")) {
     host = `http://${host}`;
   }
@@ -27,6 +28,7 @@ export async function middleware(request: NextRequestWithUser) {
   if (isProtectedRoute) {
     const cookies = request.cookies;
     const jwt = cookies.get("next-auth.session-token");
+    console.log(jwt);
     if (!jwt?.value) {
       return Response.redirect(host + "/api/auth/signin/");
     } else {
