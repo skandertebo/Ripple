@@ -12,15 +12,14 @@ export default function InteractiveSearchPage({
 }: InteractiveSearchProps) {
   const [searches, setSearches] = useState<ISearch[]>(searchHistory);
   const [currentSearch, setCurrentSearch] = useState<ISearch | null>(null);
-  const [disabled, setDisabled] = useState<boolean>(true);
   const onSearchSelect = (search: ISearch) => {
-    if (search === currentSearch) return;
+    console.log("Search selected:", search);
+    console.log("Current search:", currentSearch);
+    if (search._id === currentSearch?._id) return;
     setCurrentSearch(search);
-    setDisabled(true);
   };
   const onNewClick = (search: ISearch) => {
     setCurrentSearch(search);
-    setDisabled(false);
   };
   return (
     <div className="flex flex-row bg-background">
@@ -31,11 +30,7 @@ export default function InteractiveSearchPage({
         setSearches={setSearches}
       />
       <div className="relative -mt-16 h-screen flex-1 overflow-y-scroll pt-16">
-        <InteractiveSearch
-          disabled={disabled}
-          search={currentSearch}
-          setSearches={setSearches}
-        />
+        <InteractiveSearch search={currentSearch} setSearches={setSearches} />
       </div>
     </div>
   );

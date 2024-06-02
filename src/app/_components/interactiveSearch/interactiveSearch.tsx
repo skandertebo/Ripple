@@ -5,19 +5,19 @@ import { type MessageProps } from "./message";
 import { useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import { type ISearch } from "@/models/search.model";
+import { set } from "mongoose";
 
 interface InteractiveSearchProps {
-  disabled: boolean;
   search: ISearch | null;
   setSearches: React.Dispatch<React.SetStateAction<ISearch[]>>;
 }
 
 export default function InteractiveSearch({
-  disabled,
   search,
   setSearches,
 }: InteractiveSearchProps) {
   const searchMutation = api.search.addMessage.useMutation();
+  const [disabled, setDisabled] = useState(true);
   const messagesHistory = search ? search.messages : [];
   const [messages, setMessages] = useState<MessageProps[]>(
     messagesHistory ?? [],
@@ -26,6 +26,11 @@ export default function InteractiveSearch({
   useEffect(() => {
     if (search === null) return;
     setMessages(search.messages);
+    if (search === null || search.result.length > 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
   }, [search]);
   const onMessageSubmit = (content: string) => {
     if (disabled) return;
@@ -37,7 +42,6 @@ export default function InteractiveSearch({
       type: "user",
       content: content,
     });
-    //update searchs using setSearches
     setSearches((prevSearches) => {
       return prevSearches.map((prevSearch) => {
         if (prevSearch._id === search._id) {

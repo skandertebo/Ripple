@@ -5,8 +5,10 @@ export interface ISearch {
   _id?: string;
   name: string;
   userId: string;
+  sessionId: string;
   createdAt: Date;
   deletedAt?: Date;
+  expired: boolean;
   messages: {
     type: "user" | "bot";
     content: string;
@@ -19,8 +21,10 @@ export const searchSchema = new Schema<ISearch>(
     _id: { type: mongoose.Schema.Types.ObjectId },
     name: { type: String },
     userId: { type: String },
+    sessionId: { type: String },
     createdAt: { type: Date },
     deletedAt: { type: Date },
+    expired: { type: Boolean },
     messages: {
       type: [
         {

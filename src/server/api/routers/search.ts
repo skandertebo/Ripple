@@ -1,6 +1,8 @@
 import { SearchModel } from "@/models/search.model";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import mongoose from "mongoose";
+import axios from "axios";
 
 export const searchRouter = createTRPCRouter({
   getAllByUserId: protectedProcedure.query(async ({ ctx }) => {
@@ -10,13 +12,17 @@ export const searchRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
+        sessionId: z.string(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
       const newSearch = await SearchModel.create({
+        _id: new mongoose.Types.ObjectId(),
         name: input.name,
         userId: ctx.session.user.id,
+        sessionId: input.sessionId,
         createdAt: new Date(),
+        expired: false,
         messages: [],
         result: [],
       });
@@ -85,5 +91,24 @@ export const searchRouter = createTRPCRouter({
         { name: input.name },
         { new: true },
       );
+    }),
+  getSession: protectedProcedure
+    .input(
+      z.object({
+        maxResults: z.number(),
+        threshold: z.number(),
+        minRequests: z.number(),
+        maxRequests: z.number(),
+      }),
+    )
+    .query(async ({ input }) => {
+      try {
+        const url = `${process.env.INFLUENCER_API_URL}/search/interactive/get_session`;
+        const response = await axios.post(url, input);
+        console.log("Response from microservice:", response.data);
+        return response;
+      } catch (err) {
+        return err;
+      }
     }),
 });
