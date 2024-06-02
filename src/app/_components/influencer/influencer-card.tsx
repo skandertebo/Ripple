@@ -1,33 +1,43 @@
 "use client";
+import type { IInfluencer } from "@/models/influencer.model";
+import formatFollowersNumber from "@/utils/formatFollowersNumber";
+import getTiktokMediaUrl from "@/utils/getTiktokStream";
+import { useLayoutEffect, useRef } from "react";
 import {
   FaCheckCircle,
 } from "react-icons/fa";
-import Image from "next/image";
-import type { InfluencerDto } from "@/service/dto/influencerDto";
-import type { FC } from "react";
-import { MdOutlineMail } from "react-icons/md";
-import { FiPhone } from "react-icons/fi";
-import { FaLink } from "react-icons/fa6";
-
-
 
 export interface InfluencerCardProps {
-  influencer: InfluencerDto;
+  influencer: IInfluencer;
 }
 
-const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
+const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
+  const avatarRef = useRef<HTMLImageElement>(null);
+
+  useLayoutEffect(() => {
+    if (avatarRef.current === null) return;
+    avatarRef.current.onerror = () => {
+      avatarRef.current!.src = "/logo.png";
+    };
+  }, []);
+
   return (
-    <div className="container m-auto w-fit rounded-2xl border-2 p-6 bg-white">
-      <div className="influencer-info flex flex-wrap text-center ">
-        <div className="relative influencer-pic mr-6 ">
-          <Image
-            src={influencer.avatar.replace('-sign-va', '')}
+    <div className="w-fit rounded-2xl border-2 bg-white p-6">
+      <div className="influencer-info flex flex-row text-center ">
+        <div className="influencer-pic mr-6 ">
+          <img
+            src={
+              influencer.platform?.toLowerCase() === "tiktok"
+                ? getTiktokMediaUrl(influencer.avatar)
+                : influencer.avatar
+            }
             alt="Influencer"
             className=" size-24 rounded-full"
             width={60}
             height={60}
+            ref={avatarRef}
           />
-          <FaCheckCircle className="check-icon absolute top-[75px] right-1 size-7 rounded-full border-2 bg-white text-sky-500" />
+          <FaCheckCircle className="check-icon absolute z-10 ml-[70px] mt-[-24px] size-7 rounded-full border-2 bg-white text-sky-500" />
         </div>
 
         <div className="header mt-2">
@@ -48,67 +58,44 @@ const InfluencerCard: FC<InfluencerCardProps> = ({ influencer }) => {
               <p className="text-neutral-600">{influencer.username}</p>
             </div>
           </div>
-          <div className="stats m-4 flex w-9/12 justify-between font-bold">
+          <div className="m-4 flex max-w-[250px] flex-wrap gap-x-8 font-bold sm:max-w-[350px]">
             <div className="flex gap-1">
-              <h3>{influencer.stats.followerCount}</h3>
+              <h3>
+                {formatFollowersNumber(
+                  influencer.stats?.followerCount ?? "unknown",
+                )}
+              </h3>
               <p className="font-extralight text-neutral-400	">Followers</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats.followingCount}</h3>
+              <h3>{influencer.stats?.followingCount ?? "unknown"}</h3>
               <p className="font-extralight text-neutral-400	">Following</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats.postsCount}</h3>
+              <h3>{influencer.stats?.postsCount ?? "unknown"}</h3>
               <p className="font-extralight text-neutral-400	">Posts</p>
             </div>
           </div>
-          <div className="ml-4">{influencer.bio}</div>
+          <div className="ml-4 max-w-[250px] sm:max-w-[350px]">
+            {influencer.bio.length > 100
+              ? influencer.bio.slice(0, 100) + "..."
+              : influencer.bio}
+          </div>
         </div>
       </div>
-
-      <div className="categories mt-10 flex gap-4">
-        {influencer.categories.map((category, index) => (
-          <div
-            key={index}
-            className="category w-32 rounded-2xl border-2 text-center font-semibold"
-          >
-            {category}
-            <p className="font-extralight text-neutral-400">20%</p>
-          </div>
-        ))}
-      </div>
-      <div className="flex gap-10 mt-4 contact">
-        {influencer.contact.email.length>0 && (
-          <div className="flex email mt-4 gap-2">
-            <MdOutlineMail className="email-icon mt-1 text-primary text-xl" />
-            <div>
-              {influencer.contact.email.map((email, index) => (
-                <span className="font-extralight block text-neutral-400" key={index}>{email}</span>
-              ))}
+      {influencer.categories && (
+        <div className="categories mt-10 flex gap-4">
+          {influencer.categories.map((category, index) => (
+            <div
+              key={index}
+              className="category w-32 rounded-2xl border-2 text-center font-semibold"
+            >
+              {category}
+              <p className="font-extralight text-neutral-400">20%</p>
             </div>
-          </div>
-        )}
-        {influencer.contact.phone.length>0  && (
-           <div className="flex email mt-4 gap-2">
-            <FiPhone className="email-icon mt-1 text-primary text-xl" />
-            <div>
-              {influencer.contact.phone.map((phone, index) => (
-                <span className="font-extralight block text-neutral-400" key={index}>{phone}</span>
-              ))}
-            </div>
-          </div>
-        )}
-        {influencer.contact.url.length>0  && (
-          <div className="flex email mt-4 gap-2">
-            <FaLink className="email-icon mt-1 text-primary text-xl"/>
-            <div>
-              {influencer.contact.url.map((url, index) => (
-                <span className="font-extralight block text-neutral-400" key={index}>{url}</span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
