@@ -1,3 +1,5 @@
 export default function getTiktokMediaUrl(originalUrl: string) {
-  return originalUrl.split("?")[0]?.replace("-sign-va", "");
+  const res = originalUrl.split("?")[0]?.replace(/-sign-[^\.]+/, "");
+  console.log(res);
+  return res;
 }

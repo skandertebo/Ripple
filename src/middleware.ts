@@ -28,7 +28,6 @@ export async function middleware(request: NextRequestWithUser) {
     const cookies = request.cookies;
     const jwt = cookies.get("next-auth.session-token");
     if (!jwt?.value) {
-      console.log("No token found");
       return Response.redirect(host + "/api/auth/signin/");
     } else {
       try {
@@ -39,7 +38,6 @@ export async function middleware(request: NextRequestWithUser) {
         if (!decodeRes) {
           return Response.redirect(host + "/api/auth/signin/");
         }
-        console.log(decodeRes);
         const { data: user } = await axios.get<User>(
           `${host}/api/user/${decodeRes.sub}`,
         );

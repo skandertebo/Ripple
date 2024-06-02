@@ -1,11 +1,10 @@
 "use client";
 import type { IInfluencer } from "@/models/influencer.model";
 import formatFollowersNumber from "@/utils/formatFollowersNumber";
+import getTiktokMediaUrl from "@/utils/getTiktokStream";
 import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
-import {
-  FaCheckCircle,
-} from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 
 export interface InfluencerCardProps {
   influencer: IInfluencer;
@@ -19,16 +18,21 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
     avatarRef.current.onerror = () => {
       avatarRef.current!.src = "/logo.png";
     };
-  }, []);
+  }, [avatarRef.current]);
 
   return (
-<div className="container m-auto w-fit rounded-2xl border-2 p-6 bg-white">
+    <div className="container m-auto w-fit rounded-2xl border-2 bg-white p-6">
       <div className="influencer-info flex flex-row text-center ">
         <div className=" influencer-pic mr-6 ">
-          <Image
-            src={influencer.avatar.replace("-sign-va",'')}
+          <img
+            src={
+              influencer.platform === "tiktok"
+                ? getTiktokMediaUrl(influencer.avatar)!
+                : influencer.avatar
+            }
             alt="Influencer"
-            className="influencer-pic size-24 rounded-full  "
+            className="size-24 rounded-full"
+            ref={avatarRef}
             width={60}
             height={60}
           />
@@ -36,15 +40,15 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
         </div>
 
         <div className="header mt-2">
-         <div className="float-right text-4xl">
+          <div className="float-right text-4xl">
             {influencer.platform === "tiktok" && (
-              <Image src='/tiktok1.png' width={40} height={40} alt='insta' />
+              <Image src="/tiktok1.png" width={40} height={40} alt="insta" />
             )}
             {influencer.platform === "youtube" && (
-              <Image src='/youtube.png' width={40} height={40} alt='insta' />
+              <Image src="/youtube.png" width={40} height={40} alt="insta" />
             )}
             {influencer.platform === "Instagram" && (
-              <Image src='/insta.png' width={40} height={40} alt='insta' />
+              <Image src="/insta.png" width={40} height={40} alt="insta" />
             )}
           </div>
           <div className="profile flex flex-row">
@@ -55,15 +59,28 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
           </div>
           <div className="stats m-4 flex w-9/12 justify-between font-bold">
             <div className="flex gap-1">
-              <h3> {formatFollowersNumber(influencer.stats.followerCount)}</h3>
+              <h3>
+                {" "}
+                {formatFollowersNumber(
+                  influencer.stats?.followerCount ?? "unknown",
+                )}
+              </h3>
               <p className="font-extralight text-neutral-400	">Followers</p>
             </div>
             <div className="flex gap-1">
-              <h3>{formatFollowersNumber(influencer.stats.followingCount)}</h3>
+              <h3>
+                {formatFollowersNumber(
+                  influencer.stats?.followingCount ?? "unknown",
+                )}
+              </h3>
               <p className="font-extralight text-neutral-400	">Following</p>
             </div>
             <div className="flex gap-1">
-              <h3>{formatFollowersNumber(influencer.stats.postsCount)}</h3>
+              <h3>
+                {formatFollowersNumber(
+                  influencer.stats?.postsCount ?? "unknown",
+                )}
+              </h3>
               <p className="font-extralight text-neutral-400	">Posts</p>
             </div>
           </div>
