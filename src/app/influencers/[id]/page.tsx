@@ -33,7 +33,7 @@ const influencers = [
       followerCount: 817189,
       followingCount: 662,
     },
-    platform: "Instagram",
+    platform: "youtube",
     contact: {
       email: [],
       phone: ["905011180575"],
@@ -53,7 +53,7 @@ const influencers = [
       followerCount: 3717556,
       followingCount: 36,
     },
-    platform: "Instagram",
+    platform: "tiktok",
     contact: {
       email: [],
       phone: [],
@@ -73,7 +73,7 @@ const influencers = [
       followerCount: 5445563,
       followingCount: 188,
     },
-    platform: "Instagram",
+    platform: "youtube",
     contact: {
       email: [],
       phone: [],
@@ -93,7 +93,7 @@ const influencers = [
       followerCount: 53465,
       followingCount: 1679,
     },
-    platform: "Instagram",
+    platform: "tiktok",
     contact: {
       email: [],
       phone: [],
@@ -133,7 +133,7 @@ const influencers = [
       followerCount: 353582,
       followingCount: 5,
     },
-    platform: "Instagram",
+    platform: "youtube",
     contact: {
       email: [],
       phone: [],
@@ -173,7 +173,7 @@ const influencers = [
       followerCount: 2048863,
       followingCount: 1810,
     },
-    platform: "Instagram",
+    platform: "tiktok",
     contact: {
       email: [],
       phone: [],

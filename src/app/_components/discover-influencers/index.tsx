@@ -5,7 +5,7 @@ import type { IInfluencer } from "@/models/influencer.model";
 import { api } from "@/trpc/react";
 import { useEffect, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
-import InfluencerCard from "../influencer/influencer-card";
+import SuggestedCard from "../influencer/suggested-card";
 
 export interface DiscoverInfluencersProps {
   initialInfluencers: IInfluencer[];
@@ -38,10 +38,10 @@ const DiscoverInfluencers: React.FC<DiscoverInfluencersProps> = ({
   }, [page]);
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex w-full flex-wrap justify-center gap-x-16 gap-y-4 px-6">
+    <div className="flex w-full flex-col items-center gap-2">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
         {influencers.map((influencer, idx) => (
-          <InfluencerCard key={idx} influencer={influencer} />
+          <SuggestedCard key={idx} influencer={influencer} />
         ))}
       </div>
       {isLoading && (
