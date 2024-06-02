@@ -2,6 +2,7 @@
 import type { IInfluencer } from "@/models/influencer.model";
 import formatFollowersNumber from "@/utils/formatFollowersNumber";
 import getTiktokMediaUrl from "@/utils/getTiktokStream";
+import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import {
   FaCheckCircle,
