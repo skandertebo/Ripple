@@ -1,7 +1,6 @@
 "use client";
 import type { IInfluencer } from "@/models/influencer.model";
 import formatFollowersNumber from "@/utils/formatFollowersNumber";
-import getTiktokMediaUrl from "@/utils/getTiktokStream";
 import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import {
@@ -15,12 +14,12 @@ export interface InfluencerCardProps {
 const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
   const avatarRef = useRef<HTMLImageElement>(null);
 
-  // useLayoutEffect(() => {
-  //   if (avatarRef.current === null) return;
-  //   avatarRef.current.onerror = () => {
-  //     avatarRef.current!.src = "/logo.png";
-  //   };
-  // }, []);
+  useLayoutEffect(() => {
+    if (avatarRef.current === null) return;
+    avatarRef.current.onerror = () => {
+      avatarRef.current!.src = "/logo.png";
+    };
+  }, []);
 
   return (
 <div className="container m-auto w-fit rounded-2xl border-2 p-6 bg-white">
@@ -56,15 +55,15 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
           </div>
           <div className="stats m-4 flex w-9/12 justify-between font-bold">
             <div className="flex gap-1">
-              <h3>{influencer.stats.followerCount}</h3>
+              <h3> {formatFollowersNumber(influencer.stats.followerCount)}</h3>
               <p className="font-extralight text-neutral-400	">Followers</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats.followingCount}</h3>
+              <h3>{formatFollowersNumber(influencer.stats.followingCount)}</h3>
               <p className="font-extralight text-neutral-400	">Following</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats.postsCount}</h3>
+              <h3>{formatFollowersNumber(influencer.stats.postsCount)}</h3>
               <p className="font-extralight text-neutral-400	">Posts</p>
             </div>
           </div>
