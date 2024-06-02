@@ -8,9 +8,9 @@ export interface IInfluencer {
   bio: string;
   avatar: string;
   stats: {
-    postsCount: number;
-    followerCount: number;
-    followingCount: number;
+    postsCount: number | string;
+    followerCount: number | string;
+    followingCount: number | string;
   };
   platform: string;
   contact: {
@@ -29,9 +29,9 @@ export const influencerSchema = new Schema<IInfluencer>(
     bio: { type: String },
     avatar: { type: String },
     stats: {
-      postsCount: { type: Number },
-      followerCount: { type: Number },
-      followingCount: { type: Number },
+      postsCount: { type: mongoose.Schema.Types.Mixed },
+      followerCount: { type: mongoose.Schema.Types.Mixed },
+      followingCount: { type: mongoose.Schema.Types.Mixed },
     },
     platform: { type: String },
     contact: {
