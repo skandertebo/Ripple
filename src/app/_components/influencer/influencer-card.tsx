@@ -23,30 +23,29 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
   // }, []);
 
   return (
-    <div className="container m-auto w-9/12 rounded-2xl border-2 p-6 bg-white">
+<div className="container m-auto w-fit rounded-2xl border-2 p-6 bg-white">
       <div className="influencer-info flex flex-row text-center ">
-        <div className="influencer-pic mr-6 ">
+        <div className=" influencer-pic mr-6 ">
           <Image
-            src={influencer.avatar}
+            src={influencer.avatar.replace("-sign-va",'')}
             alt="Influencer"
-            className=" size-24 rounded-full"
+            className="influencer-pic size-24 rounded-full  "
             width={60}
             height={60}
-            ref={avatarRef}
           />
-          <FaCheckCircle className="check-icon absolute z-10 ml-[70px] mt-[-24px] size-7 rounded-full border-2 bg-white text-sky-500" />
+          <FaCheckCircle className="check-icon absolute	 ml-[70px] mt-[-24px] size-7	rounded-full  border-2 bg-white text-sky-500" />
         </div>
 
         <div className="header mt-2">
-          <div className="float-right text-4xl">
+         <div className="float-right text-4xl">
             {influencer.platform === "tiktok" && (
-              <Image src='/tiktok1.png' width={50} height={50} alt='insta' />
+              <Image src='/tiktok1.png' width={40} height={40} alt='insta' />
             )}
             {influencer.platform === "youtube" && (
-              <Image src='/youtube.png' width={50} height={50} alt='insta' />
+              <Image src='/youtube.png' width={40} height={40} alt='insta' />
             )}
             {influencer.platform === "Instagram" && (
-              <Image src='/insta.png' width={50} height={50} alt='insta' />
+              <Image src='/insta.png' width={40} height={40} alt='insta' />
             )}
           </div>
           <div className="profile flex flex-row">
@@ -55,29 +54,21 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
               <p className="text-neutral-600">{influencer.username}</p>
             </div>
           </div>
-          <div className="m-4 flex max-w-[250px] flex-wrap gap-x-8 font-bold sm:max-w-[350px]">
+          <div className="stats m-4 flex w-9/12 justify-between font-bold">
             <div className="flex gap-1">
-              <h3>
-                {formatFollowersNumber(
-                  influencer.stats?.followerCount ?? "unknown",
-                )}
-              </h3>
+              <h3>{influencer.stats.followerCount}</h3>
               <p className="font-extralight text-neutral-400	">Followers</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats?.followingCount ?? "unknown"}</h3>
+              <h3>{influencer.stats.followingCount}</h3>
               <p className="font-extralight text-neutral-400	">Following</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats?.postsCount ?? "unknown"}</h3>
+              <h3>{influencer.stats.postsCount}</h3>
               <p className="font-extralight text-neutral-400	">Posts</p>
             </div>
           </div>
-          <div className="ml-4 max-w-[250px] sm:max-w-[350px]">
-            {influencer.bio.length > 100
-              ? influencer.bio.slice(0, 100) + "..."
-              : influencer.bio}
-          </div>
+          <div className="ml-4">{influencer.bio}</div>
         </div>
       </div>
       {influencer.categories && (
