@@ -2,7 +2,7 @@ import type { Model } from "mongoose";
 import mongoose, { Schema, model } from "mongoose";
 
 export interface IInfluencer {
-  _id: string;
+  _id: mongoose.Types.ObjectId;
   name: string;
   username: string;
   bio: string;
@@ -23,7 +23,7 @@ export interface IInfluencer {
 
 export const influencerSchema = new Schema<IInfluencer>(
   {
-    _id: { type: String },
+    _id: { type: mongoose.Schema.Types.ObjectId },
     name: { type: String },
     username: { type: String },
     bio: { type: String },

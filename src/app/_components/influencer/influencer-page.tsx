@@ -14,14 +14,14 @@ const InfluencerPage: React.FC<InfluencerPageProps> = ({
   return (
     <div className="z-20 bg-slate-100 pt-6">
       <InfluencerCard influencer={influencer} />
-      {/* <div className="container m-auto mt-8 rounded-2xl p-5">
+      <div className="container m-auto mt-8 rounded-2xl p-5">
         <h1 className="ml-2 text-xl font-bold">Similar Influencers</h1>
         <div className="flex flex-wrap gap-5">
           {suggestedInfluencers.map((influencer, index) => (
             <SuggestedCard key={index} influencer={influencer} />
           ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
