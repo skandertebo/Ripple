@@ -2,11 +2,10 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { FiAperture } from "react-icons/fi";
 export interface MessageProps {
   type: "user" | "bot";
-  message: string;
-  user?: string;
+  content: string;
 }
 
-export default function Message({ type, message, user }: MessageProps) {
+export default function Message({ type, content }: MessageProps) {
   return (
     <div className="">
       <div className="text-left">
@@ -22,10 +21,10 @@ export default function Message({ type, message, user }: MessageProps) {
               : "inline-block w-fit text-3xl font-semibold"
           }
         >
-          {type === "user" ? user : "AIIN"}
+          {type === "user" ? "You" : "AIIN"}
         </span>
       </div>
-      <p className="ml-10">{message}</p>
+      <p className="ml-10">{content}</p>
     </div>
   );
 }

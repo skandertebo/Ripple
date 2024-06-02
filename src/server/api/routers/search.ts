@@ -3,30 +3,25 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const searchRouter = createTRPCRouter({
-  getAllByUserId: protectedProcedure
-    .input(
-      z.object({
-        userId: z.string(),
-      }),
-    )
-    .query(async ({ input }) => {
-      return SearchModel.find({ userId: input.userId });
-    }),
+  getAllByUserId: protectedProcedure.query(async ({ ctx }) => {
+    return SearchModel.find({ userId: ctx.session.user.id });
+  }),
   create: protectedProcedure
     .input(
       z.object({
         name: z.string(),
-        userId: z.string(),
       }),
     )
-    .mutation(async ({ input }) => {
-      return SearchModel.create({
+    .mutation(async ({ input, ctx }) => {
+      const newSearch = await SearchModel.create({
         name: input.name,
-        userId: input.userId,
+        userId: ctx.session.user.id,
         createdAt: new Date(),
         messages: [],
         result: [],
       });
+      const search = await SearchModel.findById(newSearch._id).lean();
+      return search;
     }),
   delete: protectedProcedure
     .input(

@@ -7,36 +7,51 @@ import { AiOutlineLoading } from "react-icons/ai";
 
 interface SearchHistoryProps {
   searchHistory: ISearch[];
-  userId: string;
+  onNewClick: (search: ISearch) => void;
+  onSearchSelect: (search: ISearch) => void;
+  setSearches: React.Dispatch<React.SetStateAction<ISearch[]>>;
 }
 
 export default function SearchHistory({
   searchHistory,
-  userId,
+  onNewClick,
+  onSearchSelect,
+  setSearches,
 }: SearchHistoryProps) {
-  const [searches, setSearches] = useState<ISearch[]>(searchHistory);
   const [loading, setLoading] = useState(false);
+  const onDelete = (search: ISearch) => {
+    setSearches((prev) => prev.filter((s) => s._id !== search._id));
+  };
   const searchMutation = api.search.create.useMutation({
     onSuccess: (data) => {
-      setSearches((prev) => [...prev, data]);
+      console.log("Mutation response data:", data);
+      if (!data) {
+        console.error("No data returned from the mutation");
+        setLoading(false);
+        return;
+      }
+
+      setSearches((prev) => [data, ...prev]);
       setLoading(false);
+      const newSearch: ISearch = data;
+      onNewClick(newSearch);
     },
-    onError: (error) => {
+    onError: () => {
       setLoading(false);
     },
   });
   const onNewSearchClick = () => {
     setLoading(true);
-    const input = { name: "New Search", userId: userId };
-    const newSearch = searchMutation.mutate(input);
+    const input = { name: "New Search" };
+    searchMutation.mutate(input);
   };
   return (
-    <div
-      className="border-r-1 -mt-16 hidden h-screen w-[20%] overflow-y-scroll border-gray-300 bg-white pt-20 md:block"
-      onClick={onNewSearchClick}
-    >
+    <div className="border-r-1 -mt-16 hidden h-screen w-[20%] overflow-y-scroll border-gray-300 bg-white pt-20 md:block">
       {/* New Search Button */}
-      <div className="mx-auto flex w-4/5 cursor-pointer flex-row justify-between rounded-md border-2 border-gray-300 p-2 hover:border-primary">
+      <div
+        className="mx-auto flex w-4/5 cursor-pointer flex-row justify-between rounded-md border-2 border-gray-300 p-2 hover:border-primary"
+        onClick={onNewSearchClick}
+      >
         <p className=" mt-1 text-2xl font-semibold">New Search</p>
         <div className=" h-fit rounded-lg border-2 border-primary px-1 pb-[3px] text-center text-5xl text-primary">
           {loading ? (
@@ -50,8 +65,13 @@ export default function SearchHistory({
       </div>
       {/* Search History List */}
       <div className="mx-auto mt-12 flex w-11/12 flex-col gap-2">
-        {searches.map((search, index) => (
-          <SearchHistoryElement key={index} name={search.name} />
+        {searchHistory.map((search, index) => (
+          <SearchHistoryElement
+            key={index}
+            search={search}
+            onDelete={onDelete}
+            onSearchSelect={onSearchSelect}
+          />
         ))}
       </div>
     </div>

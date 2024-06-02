@@ -13,6 +13,7 @@ export default {
         background: "#ECECEC",
         black: "#000000",
         white: "#FFFFFF",
+        primaryLight: "#5aa5ad",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],

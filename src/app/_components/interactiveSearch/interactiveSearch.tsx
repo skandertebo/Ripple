@@ -2,15 +2,54 @@
 import { FaLocationArrow } from "react-icons/fa6";
 import Message from "./message";
 import { type MessageProps } from "./message";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "@/trpc/react";
+import { type ISearch } from "@/models/search.model";
 
-export default function InteractiveSearch() {
-  const [messages, setMessages] = useState<MessageProps[]>([]);
+interface InteractiveSearchProps {
+  disabled: boolean;
+  search: ISearch | null;
+  setSearches: React.Dispatch<React.SetStateAction<ISearch[]>>;
+}
+
+export default function InteractiveSearch({
+  disabled,
+  search,
+  setSearches,
+}: InteractiveSearchProps) {
+  const searchMutation = api.search.addMessage.useMutation();
+  const messagesHistory = search ? search.messages : [];
+  const [messages, setMessages] = useState<MessageProps[]>(
+    messagesHistory ?? [],
+  );
   const [input, setInput] = useState<string>("");
-  const [user, setUser] = useState<string>("You");
-  const onMessageSubmit = (message: string) => {
-    setMessages([...messages, { type: "user", message, user }]);
+  useEffect(() => {
+    if (search === null) return;
+    setMessages(search.messages);
+  }, [search]);
+  const onMessageSubmit = (content: string) => {
+    if (disabled) return;
+    setMessages([...messages, { type: "user", content }]);
     setInput("");
+    if (search?._id === undefined) return;
+    searchMutation.mutate({
+      searchId: search._id,
+      type: "user",
+      content: content,
+    });
+    //update searchs using setSearches
+    setSearches((prevSearches) => {
+      return prevSearches.map((prevSearch) => {
+        if (prevSearch._id === search._id) {
+          return {
+            ...prevSearch,
+            messages: [...prevSearch.messages, { type: "user", content }],
+          };
+        }
+        return prevSearch;
+      });
+    });
+    //send to microservice
   };
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
@@ -25,17 +64,30 @@ export default function InteractiveSearch() {
           className="h-12 w-full rounded-md border-2 border-gray-300 px-4 py-2 text-xl font-semibold focus:border-primary"
           value={input}
           onChange={onInputChange}
+          disabled={disabled}
         />
         <FaLocationArrow
-          className="absolute right-4 top-[10px] rotate-45 animate-pulse cursor-pointer text-3xl text-primary"
+          className={
+            disabled
+              ? "text-primaryLight absolute right-4 top-[10px] rotate-45 cursor-not-allowed text-3xl"
+              : "absolute right-4 top-[10px] rotate-45 cursor-pointer text-3xl text-primary"
+          }
           onClick={() => onMessageSubmit(input)}
         />
       </div>
-      <div className="flex flex-col gap-2 px-[15%] pt-8">
-        {messages.map((message, index) => (
-          <Message key={index} {...message} />
-        ))}
-      </div>
+      {search === null ? (
+        <div className="mt-40 flex flex-col gap-2 px-[15%] pt-8">
+          <h1 className="text-center text-4xl font-bold text-primary">
+            Add a search to start
+          </h1>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2 px-[15%] pt-8">
+          {messages.map((message, index) => (
+            <Message key={index} {...message} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
