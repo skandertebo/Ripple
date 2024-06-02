@@ -74,4 +74,6 @@ export const influencerRouter = createTRPCRouter({
 
     return influencer;
   }),
+
+  getByIds: protectedProcedure
 });
