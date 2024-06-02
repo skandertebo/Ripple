@@ -11,10 +11,10 @@ export default function formatFollowersNumber(
   if (followers < 1000000) {
     return isNaN(followers / 1000)
       ? followers
-      : `${Math.round(followers / 1000)}k`;
+      : `${Math.round(followers / 1000)}K`;
   }
 
   return isNaN(followers / 1000000)
     ? followers
-    : `${Math.round(followers / 1000000)}m`;
+    : `${Math.round(followers / 1000000)}M`;
 }
