@@ -1,34 +1,19 @@
-import { api } from "@/trpc/server";
-import getTiktokMediaUrl from "@/utils/getTiktokStream";
+import { Suspense } from "react";
+import { AiOutlineLoading } from "react-icons/ai";
+import DiscoverInfluencersWrapper from "../_components/discover-influencers/discover-influencers-wrapper";
 
 export default async function Page() {
-  const influencers = await api.influencer.getAll({ limit: 3, offset: 0 });
   return (
     <div className="">
-      <h1>Influencers</h1>
-      <ul>
-        {
-          // example of how to render the influencers
-          influencers.map((influencer) => (
-            <li key={influencer._id}>
-              <div>
-                <img
-                  src={
-                    influencer.avatar
-                      ? getTiktokMediaUrl(influencer.avatar)
-                      : "/logo.png"
-                  }
-                  alt={influencer.name}
-                  width={100}
-                  height={100}
-                />
-                <h2>{influencer.name}</h2>
-                <p>{influencer.bio}</p>
-              </div>
-            </li>
-          ))
+      <Suspense
+        fallback={
+          <div className="flex h-screen w-full items-center justify-center">
+            <AiOutlineLoading className="h-8 w-8 animate-spin text-primary" />
+          </div>
         }
-      </ul>
+      >
+        <DiscoverInfluencersWrapper />
+      </Suspense>
     </div>
   );
 }
