@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <>
       <InfluencerPage
         influencer={influencer}
-        suggestedInfluencers={suggestedInfluencers}
+        suggestedInfluencers={suggestedInfluencers.slice(0, -1)}
       />
     </>
   );
