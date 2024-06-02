@@ -15,23 +15,19 @@ export interface InfluencerCardProps {
 const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
   const avatarRef = useRef<HTMLImageElement>(null);
 
-  useLayoutEffect(() => {
-    if (avatarRef.current === null) return;
-    avatarRef.current.onerror = () => {
-      avatarRef.current!.src = "/logo.png";
-    };
-  }, []);
+  // useLayoutEffect(() => {
+  //   if (avatarRef.current === null) return;
+  //   avatarRef.current.onerror = () => {
+  //     avatarRef.current!.src = "/logo.png";
+  //   };
+  // }, []);
 
   return (
-    <div className="w-fit rounded-2xl border-2 bg-white p-6">
+    <div className="container m-auto w-9/12 rounded-2xl border-2 p-6 bg-white">
       <div className="influencer-info flex flex-row text-center ">
         <div className="influencer-pic mr-6 ">
-          <img
-            src={
-              influencer.platform?.toLowerCase() === "tiktok"
-                ? getTiktokMediaUrl(influencer.avatar)
-                : influencer.avatar
-            }
+          <Image
+            src={influencer.avatar}
             alt="Influencer"
             className=" size-24 rounded-full"
             width={60}
