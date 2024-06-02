@@ -1,6 +1,8 @@
 import { InfluencerModel } from "@/models/influencer.model";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { ObjectId } from "mongodb";
+import mongoose from "mongoose";
 
 export const influencerRouter = createTRPCRouter({
   getAll: protectedProcedure
@@ -70,10 +72,21 @@ export const influencerRouter = createTRPCRouter({
     }),
 
   getOne: protectedProcedure.input(z.string()).query(async ({ input }) => {
+    console.log(input);
     const influencer = await InfluencerModel.findById(input);
-
+    console.log(influencer);
     return influencer;
   }),
 
-  getByIds: protectedProcedure
+  getByIds: protectedProcedure.input(z.array(z.string())).query(async ({ input }) => {
+    const influencers = await InfluencerModel.find({ _id: { $in: input } });
+    // console.log(influencers);
+    return influencers;
+  }),
+
+  findByUsername: protectedProcedure.input(z.string()).query(async ({ input }) => {
+    const influencer = await InfluencerModel.findOne
+      ({ username: input });
+    return influencer;  
+  }),
 });
