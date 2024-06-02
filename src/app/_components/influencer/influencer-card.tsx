@@ -86,18 +86,19 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
           </div>
         </div>
       </div>
-
-      <div className="categories mt-10 flex gap-4">
-        {influencer.categories.map((category, index) => (
-          <div
-            key={index}
-            className="category w-32 rounded-2xl border-2 text-center font-semibold"
-          >
-            {category}
-            <p className="font-extralight text-neutral-400">20%</p>
-          </div>
-        ))}
-      </div>
+      {influencer.categories && (
+        <div className="categories mt-10 flex gap-4">
+          {influencer.categories.map((category, index) => (
+            <div
+              key={index}
+              className="category w-32 rounded-2xl border-2 text-center font-semibold"
+            >
+              {category}
+              <p className="font-extralight text-neutral-400">20%</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
