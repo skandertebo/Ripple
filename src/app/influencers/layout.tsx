@@ -8,7 +8,7 @@ import { GoBell } from "react-icons/go";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="navbar flex w-full">
+    <div className="navbar flex w-full bg-slate-100">
       <div className="bg-white sticky top-0 h-dvh w-20 border-2 ">
         <ul>
           <li>
