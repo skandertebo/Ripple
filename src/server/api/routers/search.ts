@@ -4,7 +4,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const searchRouter = createTRPCRouter({
   getAllByUserId: protectedProcedure.query(async ({ ctx }) => {
-    return SearchModel.find({ userId: ctx.session.user.id });
+    return SearchModel.find({ userId: ctx.session.user.id }).lean();
   }),
   create: protectedProcedure
     .input(

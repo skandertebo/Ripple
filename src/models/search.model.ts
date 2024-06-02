@@ -16,6 +16,7 @@ export interface ISearch {
 
 export const searchSchema = new Schema<ISearch>(
   {
+    _id: { type: mongoose.Schema.Types.ObjectId },
     name: { type: String },
     userId: { type: String },
     createdAt: { type: Date },
