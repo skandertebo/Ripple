@@ -1,6 +1,8 @@
 "use client";
 import type { IInfluencer } from "@/models/influencer.model";
+import formatFollowersNumber from "@/utils/formatFollowersNumber";
 import getTiktokMediaUrl from "@/utils/getTiktokStream";
+import { useLayoutEffect, useRef } from "react";
 import {
   FaCheckCircle,
   FaInstagram,
@@ -13,6 +15,15 @@ export interface InfluencerCardProps {
 }
 
 const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
+  const avatarRef = useRef<HTMLImageElement>(null);
+
+  useLayoutEffect(() => {
+    if (avatarRef.current === null) return;
+    avatarRef.current.onerror = () => {
+      avatarRef.current!.src = "/logo.png";
+    };
+  }, []);
+
   return (
     <div className="w-fit rounded-2xl border-2 bg-white p-6">
       <div className="influencer-info flex flex-row text-center ">
@@ -27,6 +38,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
             className="influencer-pic size-24 rounded-full"
             width={60}
             height={60}
+            ref={avatarRef}
           />
           <FaCheckCircle className="check-icon absolute z-10 ml-[70px] mt-[-24px] size-7 rounded-full border-2 bg-white text-sky-500" />
         </div>
@@ -51,15 +63,19 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
           </div>
           <div className="m-4 flex max-w-[250px] flex-wrap gap-x-8 font-bold sm:max-w-[350px]">
             <div className="flex gap-1">
-              <h3>{influencer.stats.followerCount}</h3>
+              <h3>
+                {formatFollowersNumber(
+                  influencer.stats?.followerCount ?? "unknown",
+                )}
+              </h3>
               <p className="font-extralight text-neutral-400	">Followers</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats.followingCount}</h3>
+              <h3>{influencer.stats?.followingCount ?? "unknown"}</h3>
               <p className="font-extralight text-neutral-400	">Following</p>
             </div>
             <div className="flex gap-1">
-              <h3>{influencer.stats.postsCount}</h3>
+              <h3>{influencer.stats?.postsCount ?? "unknown"}</h3>
               <p className="font-extralight text-neutral-400	">Posts</p>
             </div>
           </div>

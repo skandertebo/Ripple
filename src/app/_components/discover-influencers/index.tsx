@@ -38,10 +38,7 @@ const DiscoverInfluencers: React.FC<DiscoverInfluencersProps> = ({
   }, [page]);
 
   return (
-    <div className="flex w-full flex-col gap-4 p-4">
-      <h1 className="mx-6 mb-6 mt-4 border-b border-slate-400 pb-4 text-4xl font-bold">
-        Discover Influencers
-      </h1>
+    <div className="flex w-full flex-col">
       <div className="flex w-full flex-wrap justify-center gap-x-16 gap-y-4 px-6">
         {influencers.map((influencer, idx) => (
           <InfluencerCard key={idx} influencer={influencer} />
