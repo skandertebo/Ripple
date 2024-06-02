@@ -1,5 +1,4 @@
 import InfluencerPage from "@/app/_components/influencer/influencer-page";
-import { getSimilarInfluencers } from "@/trpc/getSimilarInfluencers";
 import { api } from "@/trpc/server";
 
 export interface SimilarInfluencer {
@@ -7,21 +6,12 @@ export interface SimilarInfluencer {
   score: number;
 }
 
-
-
 export default async function Page({ params }: { params: { id: string } }) {
-
   const influencer = await api.influencer.getOne(params.id);
-  // const influencer = await api.influencer.findByUsername("shakira");
-  console.log(params.id);
-  console.log(influencer);
-  const similar= await getSimilarInfluencers(params.id);
-  // console.log(similar);
+  const similar = await api.influencer.getSimilarInfluencers(params.id);
   const ids = similar.map((influencer: SimilarInfluencer) => influencer.id);
-  // console.log(ids);
   const suggestedInfluencers = await api.influencer.getByIds(ids);
-  console.log(suggestedInfluencers);
-  
+
   return (
     <>
       {influencer && (

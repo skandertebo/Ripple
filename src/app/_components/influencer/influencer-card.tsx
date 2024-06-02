@@ -16,16 +16,20 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
   useLayoutEffect(() => {
     if (avatarRef.current === null) return;
     avatarRef.current.onerror = () => {
-      avatarRef.current!.src = "/logo.png";
+      if (avatarRef.current) avatarRef.current.src = "/logo.png";
     };
   }, [avatarRef.current]);
 
   return (
-<div className="m-auto w-fit rounded-2xl border-2 p-6 bg-white">
+    <div className="m-auto w-fit rounded-2xl border-2 bg-white p-6">
       <div className="flex flex-row text-center ">
         <div className="mr-6 ">
           <img
-            src={influencer.avatar.replace("-sign",'')}
+            src={
+              influencer.platform === "tiktok"
+                ? getTiktokMediaUrl(influencer.avatar)!
+                : influencer.avatar
+            }
             alt="Influencer"
             className="size-24 rounded-full"
             ref={avatarRef}
@@ -36,7 +40,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
         </div>
 
         <div className="mt-2">
-         <div className="float-right text-4xl">
+          <div className="float-right text-4xl">
             {influencer.platform === "tiktok" && (
               <Image src="/tiktok1.png" width={40} height={40} alt="insta" />
             )}
@@ -63,12 +67,20 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
               <p className="font-extralight text-neutral-400	">Followers</p>
             </div>
             <div className="flex gap-1">
-              <h3>{formatFollowersNumber(influencer.stats.followingCount)}</h3>
-              <p className="font-extralight text-neutral-400	">Following</p>
+              <h3>
+                {formatFollowersNumber(
+                  influencer.stats?.followingCount ?? "unknown",
+                )}
+              </h3>
+              <p className="font-extralight text-neutral-400">Following</p>
             </div>
             <div className="flex gap-1">
-              <h3>{formatFollowersNumber(influencer.stats.postsCount)}</h3>
-              <p className="font-extralight text-neutral-400	">Posts</p>
+              <h3>
+                {formatFollowersNumber(
+                  influencer.stats?.postsCount ?? "unknown",
+                )}
+              </h3>
+              <p className="font-extralight text-neutral-400">Posts</p>
             </div>
           </div>
           <div className="ml-4">{influencer.bio}</div>

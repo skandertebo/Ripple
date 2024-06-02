@@ -13,9 +13,10 @@ const config = {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     MONGODB_URI: process.env.MONGODB_URI,
+    INFLUENCER_API_URL: process.env.INFLUENCER_API_URL,
   },
   images: {
-    domains: ["cdn1.picuki.com","p16.tiktokcdn.com"],
+    domains: ["cdn1.picuki.com", "p16.tiktokcdn.com"],
   },
 };
 

@@ -1,8 +1,9 @@
+import type { SimilarInfluencer } from "@/app/influencers/[id]/page";
+import { env } from "@/env";
 import { InfluencerModel } from "@/models/influencer.model";
+import axios from "axios";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { ObjectId } from "mongodb";
-import mongoose from "mongoose";
 
 export const influencerRouter = createTRPCRouter({
   getAll: protectedProcedure
@@ -29,7 +30,6 @@ export const influencerRouter = createTRPCRouter({
           platform: { $regex: `^${input.platform}`, $options: "i" },
         });
       }
-      console.log(input);
       if (input.minFollowers) {
         query.where({
           $or: [
@@ -72,21 +72,42 @@ export const influencerRouter = createTRPCRouter({
     }),
 
   getOne: protectedProcedure.input(z.string()).query(async ({ input }) => {
-    console.log(input);
     const influencer = await InfluencerModel.findById(input);
-    console.log(influencer);
     return influencer;
   }),
 
-  getByIds: protectedProcedure.input(z.array(z.string())).query(async ({ input }) => {
-    const influencers = await InfluencerModel.find({ _id: { $in: input } });
-    // console.log(influencers);
-    return influencers;
-  }),
+  getByIds: protectedProcedure
+    .input(z.array(z.string()))
+    .query(async ({ input }) => {
+      const influencers = await InfluencerModel.find({ _id: { $in: input } });
+      return influencers;
+    }),
 
-  findByUsername: protectedProcedure.input(z.string()).query(async ({ input }) => {
-    const influencer = await InfluencerModel.findOne
-      ({ username: input });
-    return influencer;  
-  }),
+  findByUsername: protectedProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      const influencer = await InfluencerModel.findOne({ username: input });
+      return influencer;
+    }),
+  getSimilarInfluencers: protectedProcedure
+    .input(z.string())
+    .query(async ({ input: id }) => {
+      try {
+        // Construct the URL with the influencer ID
+        const url = `${env.INFLUENCER_API_URL}/search/similar/${id}`;
+        const response = await axios.get<Array<SimilarInfluencer>>(url);
+
+        // Check if response status is not in the range of 200-299
+        if (response.status < 200 || response.status >= 300) {
+          throw new Error(
+            `Failed to fetch similar influencers: ${response.statusText}`,
+          );
+        }
+
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching similar influencers:", error);
+        return [];
+      }
+    }),
 });
