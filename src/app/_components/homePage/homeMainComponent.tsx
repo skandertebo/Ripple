@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 export function HomeMainComponent() {
   return (
@@ -12,26 +11,18 @@ export function HomeMainComponent() {
           href={"/influencers"}
           className="flex cursor-pointer flex-row rounded-3xl bg-black px-5 py-2 font-semibold text-white"
         >
-          <Image
-            src="/cercleBlack.png"
-            alt="homePageImage"
-            width={25}
-            height={25}
-            className="mr-3 rounded-full"
-          />
+          <div className=" mr-3 mt-[1px] h-9 w-9 rounded-full bg-white text-center">
+            <div className="mx-auto ml-[8px] mt-[8px] h-[20px] w-[20px] rounded-full bg-black"></div>
+          </div>
           <p className="w-fit">Get Started</p>
         </Link>
         <Link
           href={"/learnMore"}
           className="flex cursor-pointer flex-row rounded-3xl bg-secondary px-5 py-2 font-semibold text-white"
         >
-          <Image
-            src="/cercleGray.png"
-            alt="homePageImage"
-            width={25}
-            height={25}
-            className="mr-3 rounded-full"
-          />
+          <div className=" mr-3 mt-[1px] h-9 w-9 rounded-full bg-white text-center">
+            <div className="mx-auto ml-[8px] mt-[8px] h-[20px] w-[20px] rounded-full bg-third"></div>
+          </div>
           <p className="w-fit">Learn More</p>
         </Link>
       </div>

@@ -1,12 +1,20 @@
-export default function Page() {
+import { getServerAuthSession } from "@/server/auth";
+import { api } from "@/trpc/server";
+import InteractiveSearchPage from "@/app/_components/interactiveSearch/interactiveSearchPage";
+
+export default async function Page() {
+  const session = await getServerAuthSession();
+  if (!session) {
+    return null;
+  }
+  const searchHistory = await api.search.getAllByUserId();
+  //sort array by creation date in descending order
+  searchHistory.sort((a, b) => {
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
   return (
-    <div>
-      <div className="flex h-screen flex-col items-center justify-center">
-        <div className="text-3xl font-bold">Interactive Search</div>
-        <div className="mt-2 text-center text-lg">
-          This is a page for interactive search
-        </div>
-      </div>
-    </div>
+    <>
+      <InteractiveSearchPage searchHistory={searchHistory} />
+    </>
   );
 }
