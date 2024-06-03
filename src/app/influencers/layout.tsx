@@ -6,7 +6,6 @@ import { BiMessageSquareDetail } from "react-icons/bi";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { PiMartiniBold } from "react-icons/pi";
 import { IoIosArrowBack } from "react-icons/io";
-import { GoBell } from "react-icons/go";
 import { usePathname } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -67,7 +66,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <IoIosArrowBack className="mt-1 "></IoIosArrowBack>
               Home
             </Link>
-            {/* <GoBell className="absolute right-8 float-right   self-center  rounded-md text-3xl"></GoBell> */}
           </div>
         </div>
         <div>{children}</div>
