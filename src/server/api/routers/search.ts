@@ -1,8 +1,8 @@
 import { SearchModel } from "@/models/search.model";
+import axios from "axios";
+import mongoose from "mongoose";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import mongoose from "mongoose";
-import axios from "axios";
 
 export const searchRouter = createTRPCRouter({
   getAllByUserId: protectedProcedure.query(async ({ ctx }) => {
@@ -104,11 +104,10 @@ export const searchRouter = createTRPCRouter({
     .query(async ({ input }) => {
       try {
         const url = `${process.env.INFLUENCER_API_URL}/search/interactive/get_session`;
-        const response = await axios.post(url, input);
-        console.log("Response from microservice:", response.data);
-        return response;
+        const response = await axios.post<string>(url, input);
+        return response.data;
       } catch (err) {
-        return err;
+        throw new Error("failed to fetch");
       }
     }),
 });
