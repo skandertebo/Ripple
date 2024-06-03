@@ -15,6 +15,7 @@ export const influencerRouter = createTRPCRouter({
         search: z.string().optional(),
         platform: z.enum(["tiktok", "instagram", "youtube"]).optional(),
         minFollowers: z.number().optional(),
+        category: z.string().optional(),
       }),
     )
     .query(async ({ input }) => {
@@ -67,7 +68,13 @@ export const influencerRouter = createTRPCRouter({
           ],
         });
       }
-      const influencers = await query.limit(input.limit).skip(input.offset);
+      if (input.category) {
+        query.where({ category: input.category });
+      }
+      const influencers = await query
+        .limit(input.limit)
+        .skip(input.offset)
+        .lean();
 
       return influencers;
     }),
@@ -77,21 +84,25 @@ export const influencerRouter = createTRPCRouter({
     if (!isValid) {
       return null;
     }
-    const influencer = await InfluencerModel.findById(input);
+    const influencer = await InfluencerModel.findById(input).lean();
     return influencer;
   }),
 
   getByIds: protectedProcedure
     .input(z.array(z.string()))
     .query(async ({ input }) => {
-      const influencers = await InfluencerModel.find({ _id: { $in: input } });
+      const influencers = await InfluencerModel.find({
+        _id: { $in: input },
+      }).lean();
       return influencers;
     }),
 
   findByUsername: protectedProcedure
     .input(z.string())
     .query(async ({ input }) => {
-      const influencer = await InfluencerModel.findOne({ username: input });
+      const influencer = await InfluencerModel.findOne({
+        username: input,
+      }).lean();
       return influencer;
     }),
   getSimilarInfluencers: protectedProcedure
@@ -101,18 +112,15 @@ export const influencerRouter = createTRPCRouter({
         // Construct the URL with the influencer ID
         const url = `${env.INFLUENCER_API_URL}/search/similar/${id}`;
         const response = await axios.get<Array<SimilarInfluencer>>(url);
-
-        // Check if response status is not in the range of 200-299
-        if (response.status < 200 || response.status >= 300) {
-          throw new Error(
-            `Failed to fetch similar influencers: ${response.statusText}`,
-          );
-        }
-
+        console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching similar influencers:", error);
         return [];
       }
     }),
+  getCategories: protectedProcedure.query(async () => {
+    const categories = await InfluencerModel.distinct("category").lean();
+    return categories as string[];
+  }),
 });

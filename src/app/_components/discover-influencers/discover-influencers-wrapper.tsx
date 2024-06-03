@@ -12,6 +12,7 @@ export default async function DiscoverInfluencersWrapper({
     search?: string;
     platform?: "tiktok" | "instagram" | "youtube";
     minFollowers?: number;
+    category?: string;
   } = {
     limit: 20,
     offset: 0,
@@ -30,6 +31,9 @@ export default async function DiscoverInfluencersWrapper({
   }
   if (searchParams.minFollowers) {
     inputObject.minFollowers = parseInt(searchParams.minFollowers);
+  }
+  if (searchParams.category) {
+    inputObject.category = searchParams.category;
   }
 
   const initialInfluencers = await api.influencer.getAll(inputObject);

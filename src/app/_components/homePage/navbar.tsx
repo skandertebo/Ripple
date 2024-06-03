@@ -20,14 +20,17 @@ export async function Navbar() {
           </Link>
         </div>
         <div className="hidden flex-row gap-4 sm:flex md:gap-20">
-          <Link href="/" className="text-xl font-semibold hover:text-primary">
+          <Link
+            href="/influencers/interactiveSearch"
+            className="text-xl font-semibold hover:text-primary"
+          >
             SearchIN
           </Link>
-          <Link href="/" className="text-xl font-semibold hover:text-primary">
+          <Link
+            href="/influencers"
+            className="text-xl font-semibold hover:text-primary"
+          >
             Influencers
-          </Link>
-          <Link href="/" className="text-xl font-semibold hover:text-primary">
-            Chat
           </Link>
         </div>
         <Link
