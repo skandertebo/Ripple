@@ -59,6 +59,10 @@ export default {
           "25%": { transform: "translateY(300px)" },
           "50%": { transform: "translateY(-400px)" },
         },
+        ripple: {
+          "0%, 100%": { transform: "scale(0.1)", opacity: "0" },
+          "99%": { transform: "scale(1)", opacity: "0.5" },
+        },
       },
       animation: {
         moveUpDown1: "moveUpDown1 4s",
@@ -69,6 +73,7 @@ export default {
         moveUpDown6: "moveUpDown6 4s",
         moveUpDown7: "moveUpDown7 4s",
         moveUpDown8: "moveUpDown8 4s",
+        ripple: "ripple 2s infinite",
       },
     },
   },
