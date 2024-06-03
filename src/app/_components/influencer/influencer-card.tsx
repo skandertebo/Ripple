@@ -21,9 +21,9 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
   }, [avatarRef.current]);
 
   return (
-    <div className="container m-auto w-fit rounded-2xl border-2 bg-white p-6">
-      <div className="influencer-info flex flex-row text-center ">
-        <div className=" influencer-pic mr-6 ">
+    <div className="m-auto w-fit rounded-2xl border-2 bg-white p-6">
+      <div className="flex flex-row text-center ">
+        <div className="mr-6 ">
           <img
             src={
               influencer.platform === "tiktok"
@@ -36,10 +36,10 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
             width={60}
             height={60}
           />
-          <FaCheckCircle className="check-icon absolute	 ml-[70px] mt-[-24px] size-7	rounded-full  border-2 bg-white text-sky-500" />
+          <FaCheckCircle className="absolute ml-[70px] mt-[-24px] size-7	rounded-full  border-2 bg-white text-sky-500" />
         </div>
 
-        <div className="header mt-2">
+        <div className="mt-2">
           <div className="float-right text-4xl">
             {influencer.platform === "tiktok" && (
               <Image src="/tiktok1.png" width={40} height={40} alt="insta" />
@@ -72,7 +72,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
                   influencer.stats?.followingCount ?? "unknown",
                 )}
               </h3>
-              <p className="font-extralight text-neutral-400	">Following</p>
+              <p className="font-extralight text-neutral-400">Following</p>
             </div>
             <div className="flex gap-1">
               <h3>
@@ -80,18 +80,18 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
                   influencer.stats?.postsCount ?? "unknown",
                 )}
               </h3>
-              <p className="font-extralight text-neutral-400	">Posts</p>
+              <p className="font-extralight text-neutral-400">Posts</p>
             </div>
           </div>
           <div className="ml-4">{influencer.bio}</div>
         </div>
       </div>
       {influencer.categories && (
-        <div className="categories mt-10 flex gap-4">
+        <div className="mt-10 flex gap-4">
           {influencer.categories.map((category, index) => (
             <div
               key={index}
-              className="category w-32 rounded-2xl border-2 text-center font-semibold"
+              className="w-32 rounded-2xl border-2 text-center font-semibold"
             >
               {category}
               <p className="font-extralight text-neutral-400">20%</p>

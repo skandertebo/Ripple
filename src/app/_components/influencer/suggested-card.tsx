@@ -18,7 +18,7 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
     };
   }, [avatarRef.current]);
   return (
-    <Link href={`/influencers/${influencer._id}`}>
+    <Link href={`/influencers/${String(influencer._id)}`}>
       <div className="container m-auto mt-10 h-72 w-72 rounded-2xl border-2 bg-white p-5 text-center">
         <div className="float-left text-4xl">
           {influencer.platform === "tiktok" && (

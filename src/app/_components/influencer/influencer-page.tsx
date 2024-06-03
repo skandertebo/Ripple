@@ -16,11 +16,15 @@ const InfluencerPage: React.FC<InfluencerPageProps> = ({
       <InfluencerCard influencer={influencer} />
       <div className="container m-auto mt-8 rounded-2xl p-5">
         <h1 className="ml-2 text-xl font-bold">Similar Influencers</h1>
-        <div className="flex flex-wrap gap-5">
-          {suggestedInfluencers.map((influencer, index) => (
-            <SuggestedCard key={index} influencer={influencer} />
-          ))}
-        </div>
+        {suggestedInfluencers.length === 0 ? (
+          <p className="m-4 text-2xl text-center text-primary">No similar influencers found</p>
+        ) : (
+          <div className="flex flex-wrap gap-5">
+            {suggestedInfluencers.map((influencer, index) => (
+        <SuggestedCard key={index} influencer={influencer} />
+      ))}
+    </div>
+  )}
       </div>
     </div>
   );
