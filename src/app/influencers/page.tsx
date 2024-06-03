@@ -1,3 +1,4 @@
+import { api } from "@/trpc/server";
 import { Suspense } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import DiscoverInfluencersWrapper from "../_components/discover-influencers/discover-influencers-wrapper";
@@ -9,11 +10,12 @@ export default async function Page({
   searchParams: Record<string, string>;
 }) {
   const key = JSON.stringify(searchParams);
+  const categories = await api.influencer.getCategories();
   return (
     <div className="flex w-full flex-col gap-4 p-4">
       <div className="mx-6 mb-6 mt-4 flex flex-col gap-6 border-b border-slate-400 pb-4">
         <h1 className=" text-4xl font-bold">Discover Influencers</h1>
-        <SearchFilters searchParams={searchParams} />
+        <SearchFilters searchParams={searchParams} categories={categories} />
       </div>
       <Suspense
         key={key}
