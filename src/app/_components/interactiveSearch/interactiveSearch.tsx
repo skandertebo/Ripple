@@ -17,9 +17,10 @@ export default function InteractiveSearch({
   search,
   setSearches,
 }: InteractiveSearchProps) {
+  const [findByIds, setFindByIds] = useState<string[]>([]);
   const searchMutation = api.search.addMessage.useMutation();
   const influencersQuery = api.influencer.getByIds.useQuery(
-    search?.result ?? [],
+    search?.result ?? findByIds,
     {
       enabled: search?.result.length > 0,
       refetchOnMount: false,
@@ -56,7 +57,7 @@ export default function InteractiveSearch({
           content: result.data,
         });
       } else if (result.type === "RESULT") {
-        const resultD = [result.data.map((influencer) => influencer.id)];
+        const resultD = result.data.map((influencer) => influencer.id);
         setSearches((prevSearches) => {
           return prevSearches.map((prevSearch) => {
             if (prevSearch._id === search._id) {
@@ -73,7 +74,8 @@ export default function InteractiveSearch({
           searchId: search._id,
           result: resultD,
         });
-        influencersQuery.refetch(resultD).then((res) => {
+        setFindByIds(resultD);
+        influencersQuery.refetch().then((res) => {
           if (!res.data) return;
           setInfluencers(res.data);
         });
