@@ -5,6 +5,7 @@ import getTiktokMediaUrl from "@/utils/getTiktokStream";
 import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import Link from "next/link";
 
 export interface InfluencerCardProps {
   influencer: IInfluencer;
@@ -19,6 +20,8 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
       if (avatarRef.current) avatarRef.current.src = "/logo.png";
     };
   }, [avatarRef.current]);
+
+  console.log(influencer.category);
 
   return (
     <div className="m-auto w-fit rounded-2xl border-2 bg-white p-6">
@@ -36,6 +39,8 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
             width={60}
             height={60}
           />
+        
+          
           <FaCheckCircle className="absolute ml-[70px] mt-[-24px] size-7	rounded-full  border-2 bg-white text-sky-500" />
         </div>
 
@@ -86,16 +91,14 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
           <div className="ml-4">{influencer.bio}</div>
         </div>
       </div>
-      {influencer.categories && (
+      {influencer.category && (
         <div className="mt-10 flex gap-4">
-          {influencer.categories.map((category, index) => (
-            <div
+          {influencer.category.split('&').map((category, index) => (
+            <Link href={`/influencers?category=${category.trim()}`}
               key={index}
-              className="w-32 rounded-2xl border-2 text-center font-semibold"
-            >
-              {category}
-              <p className="font-extralight text-neutral-400">20%</p>
-            </div>
+              className="w-32  rounded-xl border-2 text-center font-semibold">
+              {category.trim()}
+            </Link>
           ))}
         </div>
       )}
