@@ -96,13 +96,11 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
       </div>
       {influencer.category && (
         <div className="mt-10 flex gap-4">
-          {influencer.category.split('&').map((category, index) => (
-            <Link href={`/influencers?category=${category.trim()}`}
-              key={index}
+            <Link href={`/influencers?category=${encodeURIComponent(influencer.category)}`} 
+              key={influencer.category}
               className="w-32  rounded-xl border-2 text-center font-semibold">
-              {category.trim()}
+              {influencer.category}
             </Link>
-          ))}
         </div>
       )}
       <div className="flex gap-10 mt-4 contact">
