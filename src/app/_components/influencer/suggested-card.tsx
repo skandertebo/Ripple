@@ -87,11 +87,11 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
           {`
             .bio {
               display: -webkit-box;
-              -webkit-line-clamp: 3;
+              -webkit-line-clamp: 2;
               -webkit-box-orient: vertical;
               overflow: hidden;
               text-overflow: ellipsis;
-              max-height: 4.5em; /* Assuming approximately 1.5em per line */
+              max-height: 4.5em; 
             }
           `}
         </style>
