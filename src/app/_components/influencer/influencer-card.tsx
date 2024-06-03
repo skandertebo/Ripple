@@ -65,7 +65,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
               <p className="text-neutral-600">{influencer.username}</p>
             </div>
           </div>
-          <div className="stats m-4 flex w-9/12 justify-between font-bold">
+          <div className="m-4 flex w-9/12 justify-between font-bold gap-4">
             <div className="flex gap-1">
               <h3>
                 {formatFollowersNumber(
