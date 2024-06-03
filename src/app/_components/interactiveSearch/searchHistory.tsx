@@ -1,7 +1,7 @@
 "use client";
 import { type ISearch } from "@/models/search.model";
 import SearchHistoryElement from "./searchHistoryElement";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import { AiOutlineLoading } from "react-icons/ai";
 
@@ -9,13 +9,14 @@ interface SearchHistoryProps {
   searchHistory: ISearch[];
   onNewClick: (search: ISearch) => void;
   onSearchSelect: (search: ISearch) => void;
+  searches: ISearch[];
   setSearches: React.Dispatch<React.SetStateAction<ISearch[]>>;
 }
 
 export default function SearchHistory({
-  searchHistory,
   onNewClick,
   onSearchSelect,
+  searches,
   setSearches,
 }: SearchHistoryProps) {
   const [loading, setLoading] = useState(false);
@@ -42,6 +43,9 @@ export default function SearchHistory({
     setLoading(true);
     searchMutation.mutate({ name: "New Search" });
   };
+  useEffect(() => {
+    setSearches(searches);
+  }, [searches]);
   return (
     <div className="border-r-1 -mt-16 hidden h-screen w-[20%] overflow-y-scroll border-gray-300 bg-white pt-20 md:block">
       {/* New Search Button */}
@@ -62,7 +66,7 @@ export default function SearchHistory({
       </div>
       {/* Search History List */}
       <div className="mx-auto mt-12 flex w-11/12 flex-col gap-2">
-        {searchHistory.map((search, index) => (
+        {searches.map((search, index) => (
           <SearchHistoryElement
             key={index}
             search={search}

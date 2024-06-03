@@ -18,6 +18,7 @@ export default function InteractiveSearch({
   search,
   setSearches,
 }: InteractiveSearchProps) {
+  const [nameUpdated, setNameUpdated] = useState(false);
   const [foundIds, setFoundIds] = useState<string[]>([]);
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -151,9 +152,10 @@ export default function InteractiveSearch({
         return prevSearch;
       });
     });
-    if (search.messages.length === 0) {
+    if (!nameUpdated) {
       //update name of search
-      // nameMutation.mutate({ searchId: search._id, content });
+      nameMutation.mutate({ searchId: search._id, content });
+      setNameUpdated(true);
     }
   };
 

@@ -101,12 +101,21 @@ export const searchRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const name = input.content;
-      return SearchModel.findByIdAndUpdate(
-        input.searchId,
-        { name: name },
-        { new: true },
-      );
+      try {
+        const url = `${process.env.INFLUENCER_API_URL}/search/title`;
+        const titleInput = {
+          input: input.content,
+        };
+        const response = await axios.post<{ title: string }>(url, titleInput);
+        const newTitle = response.data.title;
+        return SearchModel.findByIdAndUpdate(
+          input.searchId,
+          { name: newTitle },
+          { new: true },
+        );
+      } catch (err) {
+        throw new Error("failed to fetch");
+      }
     }),
   getSession: protectedProcedure
     .input(
@@ -135,7 +144,7 @@ export const searchRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      SearchModel.findByIdAndUpdate(
+      const newSearch = await SearchModel.findByIdAndUpdate(
         input.searchId,
         {
           $push: {
@@ -155,7 +164,7 @@ export const searchRouter = createTRPCRouter({
           data: string | SearchResponse;
         }>(url, { input: input.query }, { params: params });
         if (response.data.type === "QUESTION") {
-          SearchModel.findByIdAndUpdate(
+          await SearchModel.findByIdAndUpdate(
             input.searchId,
             {
               $push: {
@@ -168,11 +177,15 @@ export const searchRouter = createTRPCRouter({
             { new: true },
           );
         } else if (response.data.type === "RESULT") {
-          SearchModel.findByIdAndUpdate(
+          let influencersIds: string[] = [];
+          if (typeof response.data.data !== "string") {
+            influencersIds = response.data.data.map((res) => res.id);
+          }
+          await SearchModel.findByIdAndUpdate(
             input.searchId,
             {
               $push: {
-                result: { $each: response.data.data },
+                result: { $each: influencersIds },
               },
             },
             { new: true },

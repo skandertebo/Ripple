@@ -27,6 +27,7 @@ export default function InteractiveSearchPage({
         searchHistory={searches}
         onNewClick={onNewClick}
         onSearchSelect={onSearchSelect}
+        searches={searches}
         setSearches={setSearches}
       />
       <div className="-mt-16 h-screen flex-1 overflow-y-scroll pb-28 pt-16">
