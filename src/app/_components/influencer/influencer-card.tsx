@@ -91,7 +91,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
               <p className="font-extralight text-neutral-400">Posts</p>
             </div>
           </div>
-          <div className="ml-4">{influencer.bio}</div>
+          <div className="bio break-words max-w-5xl ml-4">{influencer.bio}</div>
         </div>
       </div>
       {influencer.category && (
@@ -137,6 +137,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
           </div>
         )}
       </div>
+
     </div>
   );
 };
