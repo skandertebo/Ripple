@@ -109,3 +109,30 @@ export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
     },
   });
 });
+
+const ADMINS = [
+  "mohamedrebai748@gmail.com",
+  "melekbensnoussi15@gmail.com",
+  "amynaghannem@gmail.com",
+  "alexandertebourb@gmail.com",
+];
+
+export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
+  await connectDB();
+  if (!ctx.session || !ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  if (
+    !ctx.session.user ||
+    !ctx.session.user.email ||
+    !ADMINS.includes(ctx.session.user.email)
+  ) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
