@@ -1,12 +1,11 @@
 "use client";
-import { FaLocationArrow } from "react-icons/fa6";
-import Message from "./message";
-import { type MessageProps } from "./message";
-import { useEffect, useState } from "react";
-import { api } from "@/trpc/react";
-import { type ISearch } from "@/models/search.model";
 import { type IInfluencer } from "@/models/influencer.model";
+import { type ISearch } from "@/models/search.model";
+import { api } from "@/trpc/react";
+import { useEffect, useState } from "react";
+import { FaLocationArrow } from "react-icons/fa6";
 import SuggestedCard from "../influencer/suggested-card";
+import Message, { type MessageProps } from "./message";
 
 interface InteractiveSearchProps {
   search: ISearch | null;
@@ -17,15 +16,22 @@ export default function InteractiveSearch({
   search,
   setSearches,
 }: InteractiveSearchProps) {
-  const [findByIds, setFindByIds] = useState<string[]>([]);
+  const [foundIds, setFoundIds] = useState<string[]>([]);
   const searchMutation = api.search.addMessage.useMutation();
-  const influencersQuery = api.influencer.getByIds.useQuery(
-    search?.result ?? findByIds,
-    {
-      enabled: search?.result.length > 0,
-      refetchOnMount: false,
-    },
-  );
+  const influencersQuery = api.influencer.getByIds.useQuery(foundIds, {
+    enabled: foundIds.length > 0,
+    refetchOnMount: false,
+  });
+
+  useEffect(() => {
+    if (foundIds.length) {
+      influencersQuery.refetch().then((res) => {
+        if (!res.data) return;
+        setInfluencers(res.data);
+      });
+    }
+  }, [foundIds]);
+
   const resultMutation = api.search.addResult.useMutation();
   const interactiveSearch = api.search.search.useMutation({
     onSuccess: (result) => {
@@ -74,11 +80,7 @@ export default function InteractiveSearch({
           searchId: search._id,
           result: resultD,
         });
-        setFindByIds(resultD);
-        influencersQuery.refetch().then((res) => {
-          if (!res.data) return;
-          setInfluencers(res.data);
-        });
+        setFoundIds(resultD);
       }
       setLoading(false);
     },
