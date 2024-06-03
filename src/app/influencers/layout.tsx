@@ -55,7 +55,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <IoIosArrowBack className="mt-1 "></IoIosArrowBack>
               Home
             </Link>
-            <GoBell className="absolute right-8 float-right   self-center  rounded-md text-3xl"></GoBell>
+            {/* <GoBell className="absolute right-8 float-right   self-center  rounded-md text-3xl"></GoBell> */}
           </div>
         </div>
         <div>{children}</div>
