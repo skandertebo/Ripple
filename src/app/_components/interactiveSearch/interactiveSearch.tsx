@@ -5,7 +5,8 @@ import { type MessageProps } from "./message";
 import { useEffect, useState } from "react";
 import { api } from "@/trpc/react";
 import { type ISearch } from "@/models/search.model";
-import { set } from "mongoose";
+import { type IInfluencer } from "@/models/influencer.model";
+import SuggestedCard from "../influencer/suggested-card";
 
 interface InteractiveSearchProps {
   search: ISearch | null;
@@ -17,10 +18,77 @@ export default function InteractiveSearch({
   setSearches,
 }: InteractiveSearchProps) {
   const searchMutation = api.search.addMessage.useMutation();
+  const influencersQuery = api.influencer.getByIds.useQuery(
+    search?.result ?? [],
+    {
+      enabled: search?.result.length > 0,
+      refetchOnMount: false,
+    },
+  );
+  const resultMutation = api.search.addResult.useMutation();
+  const interactiveSearch = api.search.search.useMutation({
+    onSuccess: (result) => {
+      if (result === null) return;
+      if (search === null) return;
+      if (result.type === "QUESTION") {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { type: "bot", content: result.data },
+        ]);
+        setSearches((prevSearches) => {
+          return prevSearches.map((prevSearch) => {
+            if (prevSearch._id === search._id) {
+              return {
+                ...prevSearch,
+                messages: [
+                  ...prevSearch.messages,
+                  { type: "bot", content: result.data },
+                ],
+              };
+            }
+            return prevSearch;
+          });
+        });
+        if (search._id === undefined) return;
+        searchMutation.mutate({
+          searchId: search._id,
+          type: "bot",
+          content: result.data,
+        });
+      } else if (result.type === "RESULT") {
+        const resultD = [result.data.map((influencer) => influencer.id)];
+        setSearches((prevSearches) => {
+          return prevSearches.map((prevSearch) => {
+            if (prevSearch._id === search._id) {
+              return {
+                ...prevSearch,
+                result: resultD,
+              };
+            }
+            return prevSearch;
+          });
+        });
+        if (search._id === undefined) return;
+        resultMutation.mutate({
+          searchId: search._id,
+          result: resultD,
+        });
+        influencersQuery.refetch(resultD).then((res) => {
+          if (!res.data) return;
+          setInfluencers(res.data);
+        });
+      }
+      setLoading(false);
+    },
+  });
   const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
   const messagesHistory = search ? search.messages : [];
   const [messages, setMessages] = useState<MessageProps[]>(
     messagesHistory ?? [],
+  );
+  const [influencers, setInfluencers] = useState<IInfluencer[]>(
+    influencersQuery.data ?? [],
   );
   const [input, setInput] = useState<string>("");
   useEffect(() => {
@@ -33,9 +101,16 @@ export default function InteractiveSearch({
     }
   }, [search]);
   const onMessageSubmit = (content: string) => {
-    if (disabled) return;
+    if (disabled || loading) return;
+    setLoading(true);
     setMessages([...messages, { type: "user", content }]);
     setInput("");
+    if (search?.sessionId === undefined) return;
+    console.log("Sending req to micro", search?.sessionId, content);
+    interactiveSearch.mutate({
+      sessionId: search?.sessionId,
+      query: content,
+    });
     if (search?._id === undefined) return;
     searchMutation.mutate({
       searchId: search._id,
@@ -53,11 +128,21 @@ export default function InteractiveSearch({
         return prevSearch;
       });
     });
-    //send to microservice
   };
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
+  let arrowStyle;
+  if (disabled) {
+    arrowStyle =
+      "text-primaryLight absolute right-4 top-[10px] rotate-45 cursor-not-allowed text-3xl";
+  } else if (loading) {
+    arrowStyle =
+      "text-primary absolute right-4 top-[10px] -rotate-45 cursor-not-allowed  text-3xl animate-pulse ";
+  } else {
+    arrowStyle =
+      "absolute right-4 top-[10px] rotate-45 cursor-pointer text-3xl text-primary";
+  }
   return (
     <div>
       <div className="fixed bottom-12 left-[35%] mx-auto w-[55%]">
@@ -71,11 +156,7 @@ export default function InteractiveSearch({
           disabled={disabled}
         />
         <FaLocationArrow
-          className={
-            disabled
-              ? "text-primaryLight absolute right-4 top-[10px] rotate-45 cursor-not-allowed text-3xl"
-              : "absolute right-4 top-[10px] rotate-45 cursor-pointer text-3xl text-primary"
-          }
+          className={arrowStyle}
           onClick={() => onMessageSubmit(input)}
         />
       </div>
@@ -90,6 +171,11 @@ export default function InteractiveSearch({
           {messages.map((message, index) => (
             <Message key={index} {...message} />
           ))}
+          <div className="flex w-full flex-row gap-2">
+            {influencers.map((influencer, index) => (
+              <SuggestedCard key={index} influencer={influencer} />
+            ))}
+          </div>
         </div>
       )}
     </div>

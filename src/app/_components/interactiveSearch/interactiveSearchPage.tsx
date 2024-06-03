@@ -29,7 +29,7 @@ export default function InteractiveSearchPage({
         onSearchSelect={onSearchSelect}
         setSearches={setSearches}
       />
-      <div className="relative -mt-16 h-screen flex-1 overflow-y-scroll pt-16">
+      <div className="-mt-16 h-screen flex-1 overflow-y-scroll pb-28 pt-16">
         <InteractiveSearch search={currentSearch} setSearches={setSearches} />
       </div>
     </div>

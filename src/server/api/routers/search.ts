@@ -110,4 +110,27 @@ export const searchRouter = createTRPCRouter({
         throw new Error("failed to fetch");
       }
     }),
+  search: protectedProcedure
+    .input(
+      z.object({
+        sessionId: z.string(),
+        query: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      try {
+        console.log("Sending req to micro 2", input.sessionId, input.query);
+        const url = `${process.env.INFLUENCER_API_URL}/search/interactive/search`;
+        const params = { session_key: input.sessionId };
+        const response = await axios.post(
+          url,
+          { input: input.query },
+          { params: params },
+        );
+        console.log("Response from micro", response.data);
+        return response.data;
+      } catch (err) {
+        throw new Error("failed to fetch");
+      }
+    }),
 });

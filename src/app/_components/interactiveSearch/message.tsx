@@ -21,7 +21,7 @@ export default function Message({ type, content }: MessageProps) {
               : "inline-block w-fit text-3xl font-semibold"
           }
         >
-          {type === "user" ? "You" : "AIIN"}
+          {type === "user" ? "You" : "Ripple"}
         </span>
       </div>
       <p className="ml-10">{content}</p>

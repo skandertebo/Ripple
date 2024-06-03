@@ -53,10 +53,12 @@ export default function SearchHistory({
   });
   const onNewSearchClick = () => {
     setLoading(true);
-    searchQuery.refetch();
-
-    // const input = { name: "New Search" };
-    // searchMutation.mutate(input);
+    searchQuery.refetch().then((res) => {
+      if (!res.data) return;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const input = { name: "New Search", sessionId: res.data };
+      searchMutation.mutate(input);
+    });
   };
   return (
     <div className="border-r-1 -mt-16 hidden h-screen w-[20%] overflow-y-scroll border-gray-300 bg-white pt-20 md:block">
