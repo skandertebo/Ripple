@@ -108,11 +108,16 @@ export const searchRouter = createTRPCRouter({
         };
         const response = await axios.post<{ title: string }>(url, titleInput);
         const newTitle = response.data.title;
-        return SearchModel.findByIdAndUpdate(
+        const newSearch = await SearchModel.findByIdAndUpdate(
           input.searchId,
           { name: newTitle },
           { new: true },
         );
+        if (!newSearch) {
+          throw new Error("failed to fetch");
+        }
+        const search = await SearchModel.findById(newSearch._id).lean();
+        return search;
       } catch (err) {
         throw new Error("failed to fetch");
       }

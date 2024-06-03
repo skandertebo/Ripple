@@ -1,12 +1,11 @@
 "use client";
 import { type ISearch } from "@/models/search.model";
 import SearchHistoryElement from "./searchHistoryElement";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { api } from "@/trpc/react";
 import { AiOutlineLoading } from "react-icons/ai";
 
 interface SearchHistoryProps {
-  searchHistory: ISearch[];
   onNewClick: (search: ISearch) => void;
   onSearchSelect: (search: ISearch) => void;
   searches: ISearch[];
@@ -43,9 +42,6 @@ export default function SearchHistory({
     setLoading(true);
     searchMutation.mutate({ name: "New Search" });
   };
-  useEffect(() => {
-    setSearches(searches);
-  }, [searches]);
   return (
     <div className="border-r-1 -mt-16 hidden h-screen w-[20%] overflow-y-scroll border-gray-300 bg-white pt-20 md:block">
       {/* New Search Button */}

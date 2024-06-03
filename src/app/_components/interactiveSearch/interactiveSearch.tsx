@@ -11,11 +11,13 @@ import { FiAperture } from "react-icons/fi";
 
 interface InteractiveSearchProps {
   search: ISearch | null;
+  searches: ISearch[];
   setSearches: React.Dispatch<React.SetStateAction<ISearch[]>>;
 }
 
 export default function InteractiveSearch({
   search,
+  searches,
   setSearches,
 }: InteractiveSearchProps) {
   const [nameUpdated, setNameUpdated] = useState(false);
@@ -38,18 +40,16 @@ export default function InteractiveSearch({
         console.error("No data returned from the mutation");
         return;
       }
-      const search = data as ISearch;
-      setSearches((prevSearches) => {
-        return prevSearches.map((prevSearch) => {
-          if (prevSearch._id === search._id) {
-            return {
-              ...prevSearch,
-              name: data.name,
-            };
-          }
-          return prevSearch;
-        });
+      const newSearch = data as ISearch;
+      console.log("New search:", newSearch);
+      //check if the search is updated
+      const newSearches = searches.map((prevSearch) => {
+        if (prevSearch._id === newSearch._id) {
+          return newSearch;
+        }
+        return prevSearch;
       });
+      setSearches(newSearches);
     },
   });
   const [influencers, setInfluencers] = useState<IInfluencer[]>(
@@ -181,7 +181,7 @@ export default function InteractiveSearch({
           type="text"
           title="description"
           placeholder="Search for ..."
-          className="h-12 w-full rounded-md border-2 border-gray-300 px-4 py-2 text-xl font-semibold focus:border-primary"
+          className="h-12 w-full rounded-md border-2 border-gray-300 px-4 py-2 text-xl font-semibold focus:border-primary disabled:cursor-not-allowed disabled:bg-white"
           value={input}
           onChange={onInputChange}
           disabled={disabled}

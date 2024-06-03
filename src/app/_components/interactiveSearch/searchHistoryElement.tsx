@@ -22,7 +22,7 @@ export default function SearchHistoryElement({
   return (
     <div className="flex w-full flex-row justify-between rounded-md border-2 border-gray-300 px-2 py-2 hover:border-primary ">
       <p
-        className="cursor-pointer text-xl hover:text-primary"
+        className="w-11/12 cursor-pointer truncate text-xl hover:text-primary"
         onClick={() => onSearchSelect(search)}
       >
         {search.name}
