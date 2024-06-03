@@ -112,7 +112,7 @@ export const influencerRouter = createTRPCRouter({
         // Construct the URL with the influencer ID
         const url = `${env.INFLUENCER_API_URL}/search/similar/${id}`;
         const response = await axios.get<Array<SimilarInfluencer>>(url);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching similar influencers:", error);
