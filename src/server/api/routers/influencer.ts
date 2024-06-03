@@ -101,14 +101,7 @@ export const influencerRouter = createTRPCRouter({
         // Construct the URL with the influencer ID
         const url = `${env.INFLUENCER_API_URL}/search/similar/${id}`;
         const response = await axios.get<Array<SimilarInfluencer>>(url);
-
-        // Check if response status is not in the range of 200-299
-        if (response.status < 200 || response.status >= 300) {
-          throw new Error(
-            `Failed to fetch similar influencers: ${response.statusText}`,
-          );
-        }
-
+        console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching similar influencers:", error);
