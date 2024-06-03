@@ -11,6 +11,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
+import { ADMINS } from "@/constants";
 import { getServerAuthSession } from "@/server/auth";
 import { connectDB, db } from "@/server/db";
 
@@ -109,13 +110,6 @@ export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
     },
   });
 });
-
-const ADMINS = [
-  "mohamedrebai748@gmail.com",
-  "melekbensnoussi15@gmail.com",
-  "amynaghannem@gmail.com",
-  "alexandertebourb@gmail.com",
-];
 
 export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
   await connectDB();
