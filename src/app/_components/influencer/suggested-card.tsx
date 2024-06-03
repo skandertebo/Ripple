@@ -42,7 +42,7 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
             className="influencer-pic ml-20 size-20 rounded-full "
             ref={avatarRef}
           />
-          <FaCheckCircle className="check-icon absolute ml-[140px] mt-[-24px] size-7 rounded-full  border-2 bg-white text-sky-500" />
+          <FaCheckCircle className="check-icon relative ml-[140px] mt-[-24px] size-7 rounded-full  border-2 bg-white text-sky-500" />
 
           <div className="profile-info mt-3">
             <h2 className="text-primary ">@{influencer.name}</h2>

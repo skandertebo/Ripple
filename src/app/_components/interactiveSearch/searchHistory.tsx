@@ -22,26 +22,13 @@ export default function SearchHistory({
   const onDelete = (search: ISearch) => {
     setSearches((prev) => prev.filter((s) => s._id !== search._id));
   };
-  const searchQuery = api.search.getSession.useQuery(
-    {
-      maxResults: 10,
-      threshold: 0.5,
-      minRequests: 2,
-      maxRequests: 5,
-    },
-    {
-      enabled: false,
-    },
-  );
   const searchMutation = api.search.create.useMutation({
     onSuccess: (data) => {
-      console.log("Mutation response data:", data);
       if (!data) {
         console.error("No data returned from the mutation");
         setLoading(false);
         return;
       }
-
       setSearches((prev) => [data, ...prev]);
       setLoading(false);
       const newSearch: ISearch = data;
@@ -53,12 +40,7 @@ export default function SearchHistory({
   });
   const onNewSearchClick = () => {
     setLoading(true);
-    searchQuery.refetch().then((res) => {
-      if (!res.data) return;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const input = { name: "New Search", sessionId: res.data };
-      searchMutation.mutate(input);
-    });
+    searchMutation.mutate({ name: "New Search" });
   };
   return (
     <div className="border-r-1 -mt-16 hidden h-screen w-[20%] overflow-y-scroll border-gray-300 bg-white pt-20 md:block">
