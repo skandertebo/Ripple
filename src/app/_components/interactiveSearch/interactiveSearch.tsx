@@ -42,7 +42,6 @@ export default function InteractiveSearch({
       }
       const newSearch = data as ISearch;
       console.log("New search:", newSearch);
-      //check if the search is updated
       const newSearches = searches.map((prevSearch) => {
         if (prevSearch._id === newSearch._id) {
           return newSearch;
@@ -166,22 +165,22 @@ export default function InteractiveSearch({
   let arrowStyle;
   if (disabled) {
     arrowStyle =
-      "text-primaryLight absolute right-4 top-[10px] rotate-45 cursor-not-allowed text-3xl";
+      "text-primaryLight absolute right-16 top-[10px] rotate-45 cursor-not-allowed text-3xl";
   } else if (loading) {
     arrowStyle =
-      "text-primary absolute right-4 top-[10px] -rotate-45 cursor-not-allowed  text-3xl animate-pulse ";
+      "text-primary absolute right-16 top-[10px] -rotate-45 cursor-not-allowed  text-3xl animate-pulse ";
   } else {
     arrowStyle =
-      "absolute right-4 top-[10px] rotate-45 cursor-pointer text-3xl text-primary";
+      "absolute right-16 top-[10px] rotate-45 cursor-pointer text-3xl text-primary";
   }
   return (
     <div>
-      <div className="fixed bottom-12 left-[31%] mx-auto w-[60%]">
+      <div className="fixed bottom-0 left-[31%] mx-auto h-24 w-[65%] bg-background">
         <input
           type="text"
           title="description"
           placeholder="Search for ..."
-          className="h-12 w-full rounded-md border-2 border-gray-300 px-4 py-2 text-xl font-semibold focus:border-primary disabled:cursor-not-allowed disabled:bg-white"
+          className="mx-auto h-12 w-[95%] rounded-md border-2 border-gray-300 px-4 py-2 text-xl font-semibold focus:border-primary disabled:cursor-not-allowed disabled:bg-white"
           value={input}
           onChange={onInputChange}
           disabled={disabled}
