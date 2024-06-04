@@ -1,3 +1,4 @@
+import { ADMINS } from "@/constants";
 import { getServerAuthSession } from "@/server/auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,7 +7,7 @@ import { DropDownMenu } from "./dropDownMenu";
 export async function Navbar() {
   const session = await getServerAuthSession();
   const userName = session ? session.user?.name : "Sign in";
-
+  const isAdmin = session?.user?.email && ADMINS.includes(session.user.email);
   return (
     <nav className="sticky top-0 z-50 w-full bg-white px-1 sm:px-10">
       <div className="flex w-full items-center justify-between py-4">
@@ -32,6 +33,14 @@ export async function Navbar() {
           >
             Influencers
           </Link>
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="text-xl font-semibold hover:text-primary"
+            >
+              Admin Section
+            </Link>
+          )}
         </div>
         <Link
           href={session ? "/api/auth/signout" : "/api/auth/signin"}

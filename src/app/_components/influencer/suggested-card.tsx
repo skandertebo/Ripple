@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLayoutEffect, useRef, type FC } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import getInfluencerLink from "../utils/getInfluencerLink";
 import type { InfluencerCardProps } from "./influencer-card";
 
 const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
@@ -20,17 +21,23 @@ const SuggestedCard: FC<InfluencerCardProps> = ({ influencer }) => {
   return (
     <Link href={`/influencers/${String(influencer._id)}`}>
       <div className="container m-auto mt-10 h-72 w-72 rounded-2xl border-2 bg-white p-5 text-center">
-        <div className="float-left text-4xl">
-          {influencer.platform === "tiktok" && (
-            <Image src="/tiktok1.png" width={30} height={30} alt="tiktok" />
-          )}
-          {influencer.platform === "youtube" && (
-            <Image src="/youtube.png" width={30} height={30} alt="youtube" />
-          )}
-          {influencer.platform === "Instagram" && (
-            <Image src="/insta.png" width={30} height={30} alt="insta" />
-          )}
-        </div>
+        <a
+          href={getInfluencerLink(influencer)}
+          target="_blank"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="float-left text-4xl">
+            {influencer.platform === "tiktok" && (
+              <Image src="/tiktok1.png" width={30} height={30} alt="tiktok" />
+            )}
+            {influencer.platform === "youtube" && (
+              <Image src="/youtube.png" width={30} height={30} alt="youtube" />
+            )}
+            {influencer.platform === "Instagram" && (
+              <Image src="/insta.png" width={30} height={30} alt="insta" />
+            )}
+          </div>
+        </a>
         <div className="">
           <img
             src={
