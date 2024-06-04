@@ -11,6 +11,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
+import { ADMINS } from "@/constants";
 import { getServerAuthSession } from "@/server/auth";
 import { connectDB, db } from "@/server/db";
 
@@ -100,6 +101,26 @@ export const publicProcedure = t.procedure.use(async ({ ctx, next }) => {
 export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
   await connectDB();
   if (!ctx.session || !ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      // infers the `session` as non-nullable
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
+
+export const adminProcedure = t.procedure.use(async ({ ctx, next }) => {
+  await connectDB();
+  if (!ctx.session || !ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  if (
+    !ctx.session.user ||
+    !ctx.session.user.email ||
+    !ADMINS.includes(ctx.session.user.email)
+  ) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({
