@@ -2,6 +2,7 @@ import { influencerRouter } from "@/server/api/routers/influencer";
 import { postRouter } from "@/server/api/routers/post";
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 import { clusterRouter } from "./routers/clusters";
+import { searchRouter } from "./routers/search";
 
 /**
  * This is the primary router for your server.
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   influencer: influencerRouter,
   cluster: clusterRouter,
+  search: searchRouter,
 });
 
 // export type definition of API

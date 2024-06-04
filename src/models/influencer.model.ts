@@ -18,7 +18,7 @@ export interface IInfluencer {
     phone: string[];
     url: string[];
   };
-  categories?: string[];
+  category?: string;
 }
 
 export const influencerSchema = new Schema<IInfluencer>(
@@ -39,7 +39,7 @@ export const influencerSchema = new Schema<IInfluencer>(
       phone: { type: [String] },
       url: { type: [String] },
     },
-    categories: { type: [String] },
+    category: { type: String },
   },
   { collection: "influencer" },
 );

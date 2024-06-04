@@ -5,6 +5,10 @@ import getTiktokMediaUrl from "@/utils/getTiktokStream";
 import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import Link from "next/link";
+import { MdOutlineMail } from "react-icons/md";
+import { FiPhone } from "react-icons/fi";
+import { FaLink } from "react-icons/fa";
 
 export interface InfluencerCardProps {
   influencer: IInfluencer;
@@ -20,8 +24,10 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
     };
   }, [avatarRef.current]);
 
+  console.log(influencer.category);
+
   return (
-    <div className="m-auto w-fit rounded-2xl border-2 bg-white p-6">
+    <div className="m-auto w-fit rounded-2xl border-2 bg-white p-8">
       <div className="flex flex-row text-center ">
         <div className="mr-6 ">
           <img
@@ -36,6 +42,8 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
             width={60}
             height={60}
           />
+        
+          
           <FaCheckCircle className="absolute ml-[70px] mt-[-24px] size-7	rounded-full  border-2 bg-white text-sky-500" />
         </div>
 
@@ -57,7 +65,7 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
               <p className="text-neutral-600">{influencer.username}</p>
             </div>
           </div>
-          <div className="stats m-4 flex w-9/12 justify-between font-bold">
+          <div className="m-4 flex w-9/12 justify-between font-bold gap-4">
             <div className="flex gap-1">
               <h3>
                 {formatFollowersNumber(
@@ -83,22 +91,51 @@ const InfluencerCard: React.FC<InfluencerCardProps> = ({ influencer }) => {
               <p className="font-extralight text-neutral-400">Posts</p>
             </div>
           </div>
-          <div className="ml-4">{influencer.bio}</div>
+          <div className="bio break-words max-w-5xl ml-4">{influencer.bio}</div>
         </div>
       </div>
-      {influencer.categories && (
+      {influencer.category && (
         <div className="mt-10 flex gap-4">
-          {influencer.categories.map((category, index) => (
-            <div
-              key={index}
-              className="w-32 rounded-2xl border-2 text-center font-semibold"
-            >
-              {category}
-              <p className="font-extralight text-neutral-400">20%</p>
-            </div>
-          ))}
+            <Link href={`/influencers?category=${encodeURIComponent(influencer.category)}`} 
+              key={influencer.category}
+              className="w-32  rounded-xl border-2 text-center font-semibold">
+              {influencer.category}
+            </Link>
         </div>
       )}
+      <div className="flex gap-10 mt-4 contact">
+        {influencer.contact.email.length>0 && (
+          <div className="flex email mt-4 gap-2">
+            <MdOutlineMail className="email-icon text-primary text-2xl" />
+            <div>
+              {influencer.contact.email.map((email, index) => (
+                <span className="font-extralight block text-neutral-500" key={index}>{email}</span>
+              ))}
+            </div>
+          </div>
+        )}
+        {influencer.contact.phone.length>0  && (
+           <div className="flex email mt-4 gap-2">
+            <FiPhone className="email-icon text-primary text-2xl" />
+            <div>
+              {influencer.contact.phone.map((phone, index) => (
+                <span className="font-extralight block text-neutral-500" key={index}>{phone}</span>
+              ))}
+            </div>
+          </div>
+        )}
+        {influencer.contact.url.length>0  && (
+          <div className="flex email mt-4 gap-2">
+            <FaLink className="email-icon text-primary text-2xl"/>
+            <div>
+              {influencer.contact.url.map((url, index) => (
+                <span className="font-extralight block text-neutral-500" key={index}>{url}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
     </div>
   );
 };
