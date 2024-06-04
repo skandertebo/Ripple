@@ -14,4 +14,11 @@ export const clusterRouter = createTRPCRouter({
     const res = await axios.get<Cluster[]>(url);
     return res.data;
   }),
+
+  visualise: adminProcedure.query(async () => {
+    const url = `${env.INFLUENCER_API_URL}/visualise/`;
+    const res = await fetch(url).then((r) => r.text());
+    console.log(res);
+    return res;
+  }),
 });
